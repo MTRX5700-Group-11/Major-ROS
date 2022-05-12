@@ -19,7 +19,7 @@
       <collision name="collision">
         <geometry>
           <mesh>
-            <uri>models:://chess_board/meshes/chess_board.obj</uri>
+            <uri>/home/hrithik/kaspace/src/assignment_1/models/chess_board/meshses/chess_board.dae</uri>
             <scale>1 1 1</scale>
           </mesh>
         </geometry>

@@ -1,3 +1,4 @@
+<?xml version='1.0'?>
 <sdf version='1.6'>
   <world name='default'>
     <plugin name="ros_link_attacher_plugin" filename="libgazebo_ros_link_attacher.so"/>
@@ -148,11 +149,27 @@
       <pose frame=''>0 0.525 0.0005 0 -0 0</pose>
     </model>
 
-       <!-- The table top of the robot -->
-    <model name='chess_board'>
+    <!-- Chess Board -->
+    <model name="chess_board">
+      <pose>0 0.75 0  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/chess_board.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Black Pieces -->
+    <model name="rook_black_1">
+      <pose>0.21 0.54 0.045  0 0 0</pose>
+      <static>true</static>
       <link name='link'>
         <inertial>
-          <mass>1</mass>
+          <mass>2</mass>
           <inertia>
             <ixx>0.166667</ixx>
             <ixy>0</ixy>
@@ -161,46 +178,440 @@
             <iyz>0</iyz>
             <izz>0.166667</izz>
           </inertia>
-          <pose frame=''>0 0 1 0 -0 0</pose>
         </inertial>
-        <pose frame=''>0 0 0 1 -0 0</pose>
         <gravity>1</gravity>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-        <enable_wind>0</enable_wind>
-        <visual name='visual'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
+        <visual name="visual">
           <geometry>
-            <mesh>
-            <uri>models:://chess_board/meshes/chess_board.obj</uri>
-            <scale>1 1 1</scale>
-          </mesh>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/rook_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
           </geometry>
-          <material>
-            <lighting>1</lighting>
-            <shader type='vertex'>
-              <normal_map>__default__</normal_map>
-            </shader>
-            <ambient>0.12 0.56 1 1</ambient>
-            <diffuse>0.12 0.56 1 1</diffuse>
-            <specular>0.01 0.01 0.01 1</specular>
-            <emissive>0 0 0 1</emissive>
-          </material>
-          <transparency>0</transparency>
-          <cast_shadows>1</cast_shadows>
         </visual>
-        <collision name='collision'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.75 1.20 0.001</size>
-            </box>
-          </geometry>
-        </collision>
       </link>
-      <static>1</static>
-      <allow_auto_disable>1</allow_auto_disable>
-      <pose frame=''>0 0.525 0.0005 0 -0 0</pose>
     </model>
+
+    <model name="knight_black_1">
+      <pose>0.15 0.54 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/knight_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <model name="bishop_black_1">
+      <pose>0.09 0.54 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/bishop_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="queen_black">
+      <pose>0.03 0.54 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/queen_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="king_black">
+      <pose>-0.03 0.54 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/king_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="bishop_black_2">
+      <pose>-0.09 0.54 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/bishop_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="knight_black_2">
+      <pose>-0.15 0.54 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/knight_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="rook_black_2">
+      <pose>-0.21 0.54 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/rook_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+     <model name="pawn_black_1">
+      <pose>0.21 0.6 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="pawn_black_2">
+      <pose>0.15 0.6 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="pawn_black_3">
+      <pose>0.09 0.6 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="pawn_black_4">
+      <pose>0.03 0.6 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="pawn_black_5">
+      <pose>-0.03 0.6 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="pawn_black_6">
+      <pose>-0.09 0.6 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="pawn_black_7">
+      <pose>-0.15 0.6 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="pawn_black_8">
+      <pose>-0.21 0.6 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <!------------------------------------------------------------------------>
+    <!-- White Pieces -->
+    <model name="rook_white_1">
+      <pose>0.21 0.96 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/rook_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="knight_white_1">
+      <pose>0.15 0.96 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/knight_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="bishop_white_1">
+      <pose>0.09 0.96 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/bishop_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="queen_white">
+      <pose>0.03 0.96 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/queen_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="king_white">
+      <pose>-0.03 0.96 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/king_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="bishop_white_2">
+      <pose>-0.09 0.96 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/bishop_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="knight_white_2">
+      <pose>-0.15 0.96 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/knight_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="rook_white_2">
+      <pose>-0.21 0.96 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/rook_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+     <model name="pawn_white_1">
+      <pose>0.21 0.9 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="pawn_white_2">
+      <pose>0.15 0.9 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="pawn_white_3">
+      <pose>0.09 0.9 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="pawn_white_4">
+      <pose>0.03 0.9 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="pawn_white_5">
+      <pose>-0.03 0.9 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="pawn_white_9">
+      <pose>-0.09 0.9 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="pawn_white_7">
+      <pose>-0.15 0.9 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <model name="pawn_white_8">
+      <pose>-0.21 0.9 0.045  0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    
+    <light type="point" name="point_light">
+      <pose>0 0.75 1 0 0 0</pose>
+      <diffuse>1 1 1 1</diffuse>
+      <specular>.1 .1 .1 1</specular>
+      <attenuation>
+        <range>20</range>
+        <linear>0.2</linear>
+        <constant>0.1</constant>
+        <quadratic>0.01</quadratic>
+      </attenuation>
+      <cast_shadows>false</cast_shadows>
+    </light>
+
   </world>
 </sdf>
