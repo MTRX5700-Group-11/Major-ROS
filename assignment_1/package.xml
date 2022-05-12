@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>assignment_1</name>
+  <version>1.0.0</version>
+  <description>Assignment_1: Controlling the UR5e arm over ROS.</description>
+
+  <maintainer email="tejaswi.digumarti@sydney.edu.au">Tejaswi Digumarti</maintainer>
+
+  <license>BSD</license>
+
+  <!-- Url tags are optional, but multiple are allowed, one per tag -->
+  <!-- Optional attribute type can be: website, bugtracker, or repository -->
+  <!-- Example: -->
+  <!-- <url type="website">http://wiki.ros.org/assignment_1</url> -->
+
+  <author email="tejaswi.digumarti@sydney.edu.au">Tejaswi Digumarti</author>
+
+  <!-- Dependencies. Can be catkin packages or system dependencies -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>pluginlib</depend>
+  <depend>rospy</depend>  
+  <depend>moveit_core</depend>
+  <depend>moveit_ros_planning</depend>
+  <depend>moveit_ros_planning_interface</depend>
+  <depend>moveit_visual_tools</depend>
+  <depend>interactive_markers</depend>
+
+  <build_depend>tf2_ros</build_depend>
+  <build_depend>eigen</build_depend>
+  <build_depend>geometric_shapes</build_depend>
+  <build_depend>tf2_eigen</build_depend>
+  <build_depend>tf2_geometry_msgs</build_depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>
