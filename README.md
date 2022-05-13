@@ -1,4 +1,4 @@
-# MTRX5700 Assignment 1 - README
+# MTRX5700 Major - README
 ![alt text](https://assets.entrepreneur.com/content/3x2/2000/1639070742-GettyImages-1157937604.jpg)
 
 ## Instructions
