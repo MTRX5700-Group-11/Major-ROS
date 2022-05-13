@@ -149,6 +149,22 @@
       <pose frame=''>0 0.525 0.0005 0 -0 0</pose>
     </model>
 
+     <!-- Chess Board -->
+    <model name="kaspy">
+      <pose>0 -0.375 0.375  -1.57 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/gkasp.dae</uri>
+            <scale>0.5 0.5 0.5 </scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+
     <!-- Chess Board -->
     <model name="chess_board">
       <pose>0 0.75 0  0 0 0</pose>
@@ -388,7 +404,6 @@
       </link>
     </model>
 
-    <!------------------------------------------------------------------------>
     <!-- White Pieces -->
     <model name="rook_white_1">
       <pose>0.21 0.96 0.045  0 0 0</pose>
@@ -607,11 +622,30 @@
       <attenuation>
         <range>20</range>
         <linear>0.2</linear>
-        <constant>0.1</constant>
-        <quadratic>0.01</quadratic>
+        <constant>0.15</constant>
+        <quadratic>0.02</quadratic>
       </attenuation>
       <cast_shadows>false</cast_shadows>
     </light>
+     <light type="spot" name="spot_light">
+      <pose>0 0.2 1.37 -0.5 0 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>.1 .1 .1 1</specular>
+      <attenuation>
+        <range>20</range>
+        <linear>0.2</linear>
+        <constant>0.15</constant>
+        <quadratic>0.02</quadratic>
+      </attenuation>
+      <spot>
+        <inner_angle>0.6</inner_angle>
+        <outer_angle>1</outer_angle>
+        <falloff>1</falloff>
+      </spot>
+      <cast_shadows>false</cast_shadows>
+    </light>
+    
 
   </world>
 </sdf>
+ 
