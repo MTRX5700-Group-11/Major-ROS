@@ -166,7 +166,7 @@
     <!-- Black Pieces -->
     <model name="rook_black_1">
       <pose>0.21 0.54 0.045  0 0 0</pose>
-      <static>true</static>
+      <static>1</static>
       <link name='link'>
         <inertial>
           <mass>2</mass>
