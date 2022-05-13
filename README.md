@@ -1,5 +1,5 @@
 # MTRX5700 Assignment 1 - README
-
+![alt text](https://assets.entrepreneur.com/content/3x2/2000/1639070742-GettyImages-1157937604.jpg?crop=4:3
 ## Instructions
 
 This folder contains skeleton code to build the tower for Question 2.  
