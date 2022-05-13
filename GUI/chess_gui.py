@@ -100,13 +100,44 @@ for x in range(8):
         new_square.place(x=board_col_to_x(x),y=board_row_to_y(y))
         board_squares.append(new_square)
 
-#update a single square on the board
-#def update_board_square(board_squares,x,y,piece):
-#    index = list_index(x,y)
-#    white = is_white(x,y)
-#    if piece=='white_queen':
-#        if(white):
-
+#update the image of a  single square on the board 
+def update_board_square(board_squares,x,y,piece):
+    index = list_index(x,y)
+    white = is_white(x,y)
+    if piece=='black_king':
+        new_image = black_king[white]
+    elif piece=='black_queen':
+        new_image = black_queen[white]
+    elif piece=='black_rook':
+        new_image = black_rook[white] 
+    elif piece=='black_bishop':
+        new_image = black_bishop[white]    
+    elif piece=='black_knight':
+        new_image = black_knight[white]    
+    elif piece=='black_pawn':
+        new_image = black_pawn[white]
+    elif piece=='white_king':
+        new_image = white_king[white]
+    elif piece=='white_queen':
+        new_image = white_queen[white]
+    elif piece=='white_rook':
+        new_image = white_rook[white] 
+    elif piece=='white_bishop':
+        new_image = white_bishop[white]    
+    elif piece=='white_knight':
+        new_image = white_knight[white]    
+    elif piece=='white_pawn':
+        new_image = white_pawn[white]         
+    elif piece=='empty':
+        new_image = empty[white]
+    else:
+        print('error, invalid piece ', piece)
+    new_square = tk.Label(window,image=new_image,border=0)
+    new_square.place(x=board_col_to_x(x),y=board_row_to_y(y))
+    board_squares[index] = new_square
+    return board_squares
+        
+board_squares = update_board_square(board_squares,2,2,'black_pawn')
 
     
 
