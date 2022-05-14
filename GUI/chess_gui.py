@@ -1,5 +1,6 @@
 #program to control a chess-playing robot
 import tkinter as tk
+import sunfish
 #from PIL import ImageTk, Image  
 #global constants used by the GUI
 counter = 0
@@ -47,6 +48,36 @@ starting_board = ('black_rook','black_knight','black_bishop','black_queen','blac
                   'empty','empty','empty','empty','empty','empty','empty','empty',
                   'white_pawn','white_pawn','white_pawn','white_pawn','white_pawn','white_pawn','white_pawn','white_pawn',
                   'white_rook','white_knight','white_bishop','white_queen','white_king','white_bishop','white_knight','white_rook')
+
+sunfish_state2 = (
+    '         \n'  #   0 -  9
+    '         \n'  #  10 - 19
+    ' rnbqkbnr\n'  #  20 - 29
+    ' pppppppp\n'  #  30 - 39
+    ' ........\n'  #  40 - 49
+    ' ........\n'  #  50 - 59
+    ' ........\n'  #  60 - 69
+    ' ........\n'  #  70 - 79
+    ' PPPPPPPP\n'  #  80 - 89
+    ' RNBQKBNR\n'  #  90 - 99
+    '         \n'  # 100 -109
+    '         \n'  # 110 -119
+)
+
+sunfish_state3 = (
+    '         \n'  #   0 -  9
+    '         \n'  #  10 - 19
+    ' rqbqkbqr\n'  #  20 - 29
+    ' pppppppp\n'  #  30 - 39
+    ' ........\n'  #  40 - 49
+    ' .....q..\n'  #  50 - 59
+    ' ..K.....\n'  #  60 - 69
+    ' ........\n'  #  70 - 79
+    ' PPpPPPPP\n'  #  80 - 89
+    ' RNBQKBnR\n'  #  90 - 99
+    '         \n'  # 100 -109
+    '         \n'  # 110 -119
+)
 
 def click_increase():
     global counter
@@ -158,37 +189,141 @@ def reset_board(board,goal_board):
             board = update_board_square(board,x,y,new_piece)
     return board
 
-board_squares = render_blank_board()
-board_squares = reset_board(board_squares,starting_board)        
+#what should happen when the user clicks the "Create Piece Button"
+#def user_create_piece_click():
+#    global board_squares
+#    board_squares = update_board_square(board_squares=board_squares,x=4,y=5,piece='black_queen')
+
+  
 #board_squares = update_board_square(board_squares,2,2,'black_pawn')
 #move_controls = tk.Frame()
 #input = tk.Entry(master=move_controls,width=20)
 #move_controls.pack()
-move_controls = tk.Frame(bg='silver')
-move_controls.pack(side = tk.LEFT)
 
-move_label = tk.Label(master=move_controls, fg='blue',bg='gold',text="Move Controls")
-move_label.pack()
-x_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set X")
-x_set.pack()
-enter_x = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
-enter_x.pack()
-y_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set Y")
-y_set.pack()
-enter_y = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
-enter_y.pack()
-piece_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set Piece")
-piece_set.pack()
-enter_piece = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
-enter_piece.pack()
+#convert name of piece from our format to sunfish format
+def convert_name_to_sunfish(piece):
+    #note, sunfish uses bold for white characters, normal case for black
+    if piece=='black_king':
+        new_name = 'k'
+    elif piece=='black_queen':
+        new_name = 'q'
+    elif piece=='black_rook':
+        new_name = 'r' 
+    elif piece=='black_bishop':
+        new_name = 'b'    
+    elif piece=='black_knight':
+        new_name = 'n'    
+    elif piece=='black_pawn':
+        new_name = 'p'
+    elif piece=='white_king':
+        new_name = 'K'
+    elif piece=='white_queen':
+        new_name = 'Q'
+    elif piece=='white_rook':
+        new_name = 'R' 
+    elif piece=='white_bishop':
+        new_name = 'B'    
+    elif piece=='white_knight':
+        new_name = 'N'    
+    elif piece=='white_pawn':
+        new_name = 'P'         
+    elif piece=='empty':
+        new_name = '.'
+    return new_name
 
-#what should happen when the user clicks the "Create Piece Button"
-def user_create_piece_click():
-    global board_squares
-    board_squares = update_board_square(board_squares=board_squares,x=4,y=5,piece='black_queen')
+#convert name from sunfish format back to our format
+def convert_sunfish_to_name(piece):
+    if piece=='k':
+        new_name = 'black_king'
+    elif piece=='q':
+        new_name = 'black_queen'
+    elif piece=='r':
+        new_name = 'black_rook' 
+    elif piece=='b':
+        new_name = 'black_bishop'    
+    elif piece=='n':
+        new_name = 'black_knight'    
+    elif piece=='p':
+        new_name = 'black_pawn'
+    elif piece=='K':
+        new_name = 'white_king'
+    elif piece=='Q':
+        new_name = 'white_queen'
+    elif piece=='R':
+        new_name = 'white_rook' 
+    elif piece=='B':
+        new_name = 'white_bishop'    
+    elif piece=='N':
+        new_name = 'white_knight'    
+    elif piece=='P':
+        new_name = 'white_pawn'         
+    elif piece=='.':
+        new_name = 'empty'
+    else:
+        #this is padding from sunfish's format, which shold be discarded
+        new_name = 'pad'
+    return new_name
 
-button = tk.Button(master=move_controls, text="Create Piece", command=user_create_piece_click)
-button.pack()
+#convert the board state in our format to sunfish format
+def convert_board_to_sunfish(board):
+    padding = '         \n'
+    #add padding at the top, as required by sunfish
+    sunfish_string = padding+padding
+    for y in range(8):
+        sunfish_string +=' '
+        for x in range(8):
+            index = list_index(x,y)
+            piece = board[index]#get the name of the piece under our definition
+            sunfish_name = convert_name_to_sunfish(piece)
+            sunfish_string += sunfish_name
+        sunfish_string +='\n'
+    #add padding at the bottom, as required by sunfish
+    sunfish_string += padding
+    sunfish_string += padding
+    return sunfish_string
+
+#convert the board state from the 
+def convert_sunfish_to_board(sunfish_board):
+    board = []
+    for i in sunfish_board:
+        piece_name = convert_sunfish_to_name(i)
+        if(piece_name=='pad'):
+            continue
+        else:
+            board.append(piece_name)
+    return board
+
+def main():
+    #create a board
+    board_squares = render_blank_board()
+    board_state = starting_board
+    board_squares = reset_board(board_squares,board_state)
+    white_castle_rights = (True,True)#Is it still possible to castle on Queen and King Side Respectively
+    black_castle_rights = (True,True)
+    move_controls = tk.Frame(bg='silver')
+    move_controls.pack(side = tk.LEFT)
+    move_label = tk.Label(master=move_controls, fg='blue',bg='gold',text="Move Controls")
+    move_label.pack()
+    x_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set X")
+    x_set.pack()
+    enter_x = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
+    enter_x.pack()
+    y_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set Y")
+    y_set.pack()
+    enter_y = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
+    enter_y.pack()
+    piece_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set Piece")
+    piece_set.pack()
+    enter_piece = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
+    enter_piece.pack()
+    
+    window.mainloop()
 
 
-window.mainloop()
+#button = tk.Button(master=move_controls, text="Create Piece", command=user_create_piece_click)
+#button.pack()
+
+if __name__ == '__main__':
+    main()
+
+
