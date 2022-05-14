@@ -38,6 +38,16 @@ white_knight = (tk.PhotoImage(file='display_pieces/white_knight_on_black.png'),t
 white_pawn = (tk.PhotoImage(file='display_pieces/white_pawn_on_black.png'),tk.PhotoImage(file='display_pieces/white_pawn_on_white.png'))
 #and the empty square
 empty = (tk.PhotoImage(file='display_pieces/empty_black.png'),tk.PhotoImage(file='display_pieces/empty_white.png'))
+
+starting_board = ('black_rook','black_knight','black_bishop','black_queen','black_king','black_bishop','black_knight','black_rook',
+                  'black_pawn','black_pawn','black_pawn','black_pawn','black_pawn','black_pawn','black_pawn','black_pawn',
+                  'empty','empty','empty','empty','empty','empty','empty','empty',
+                  'empty','empty','empty','empty','empty','empty','empty','empty',
+                  'empty','empty','empty','empty','empty','empty','empty','empty',
+                  'empty','empty','empty','empty','empty','empty','empty','empty',
+                  'white_pawn','white_pawn','white_pawn','white_pawn','white_pawn','white_pawn','white_pawn','white_pawn',
+                  'white_rook','white_knight','white_bishop','white_queen','white_king','white_bishop','white_knight','white_rook')
+
 def click_increase():
     global counter
     counter += 1
@@ -88,17 +98,19 @@ def list_index(x,y):
 label = tk.Label(window, text=counter)
 
 #render a blank board
-board_squares = []#actual board squares being rendered
-for x in range(8):
-    for y in range(8):
-        white = is_white(x,y)
-        #if white:
-        #    new_square = tk.Label(window, image=empty_white,border=0)
-        #else:
-        #    new_square = tk.Label(window, image=empty_black,border=0)
-        new_square = tk.Label(window,image=empty[white],border=0)
-        new_square.place(x=board_col_to_x(x),y=board_row_to_y(y))
-        board_squares.append(new_square)
+def render_blank_board():
+    board_squares = []#actual board squares being rendered
+    for x in range(8):
+        for y in range(8):
+            white = is_white(x,y)
+            #if white:
+            #    new_square = tk.Label(window, image=empty_white,border=0)
+            #else:
+            #    new_square = tk.Label(window, image=empty_black,border=0)
+            new_square = tk.Label(window,image=empty[white],border=0)
+            new_square.place(x=board_col_to_x(x),y=board_row_to_y(y))
+            board_squares.append(new_square)
+    return board_squares
 
 #update the image of a  single square on the board 
 def update_board_square(board_squares,x,y,piece):
@@ -136,11 +148,47 @@ def update_board_square(board_squares,x,y,piece):
     new_square.place(x=board_col_to_x(x),y=board_row_to_y(y))
     board_squares[index] = new_square
     return board_squares
-        
-board_squares = update_board_square(board_squares,2,2,'black_pawn')
 
-    
+#reset board to some default position
+def reset_board(board,goal_board):
+    for x in range(8):
+        for y in range(8):
+            index = list_index(x,y)
+            new_piece = goal_board[index]
+            board = update_board_square(board,x,y,new_piece)
+    return board
 
+board_squares = render_blank_board()
+board_squares = reset_board(board_squares,starting_board)        
+#board_squares = update_board_square(board_squares,2,2,'black_pawn')
+#move_controls = tk.Frame()
+#input = tk.Entry(master=move_controls,width=20)
+#move_controls.pack()
+move_controls = tk.Frame(bg='silver')
+move_controls.pack(side = tk.LEFT)
+
+move_label = tk.Label(master=move_controls, fg='blue',bg='gold',text="Move Controls")
+move_label.pack()
+x_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set X")
+x_set.pack()
+enter_x = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
+enter_x.pack()
+y_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set Y")
+y_set.pack()
+enter_y = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
+enter_y.pack()
+piece_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set Piece")
+piece_set.pack()
+enter_piece = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
+enter_piece.pack()
+
+#what should happen when the user clicks the "Create Piece Button"
+def user_create_piece_click():
+    global board_squares
+    board_squares = update_board_square(board_squares=board_squares,x=4,y=5,piece='black_queen')
+
+button = tk.Button(master=move_controls, text="Create Piece", command=user_create_piece_click)
+button.pack()
 
 
 window.mainloop()
