@@ -156,7 +156,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/gkasp.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/gkasp.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -172,7 +172,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/chess_board.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/chess_board.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -198,7 +198,7 @@
         <gravity>1</gravity>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/rook_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/rook_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -212,7 +212,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/knight_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/knight_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -226,7 +226,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/bishop_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/bishop_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -239,7 +239,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/queen_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/queen_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -252,7 +252,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/king_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/king_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -265,7 +265,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/bishop_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/bishop_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -278,7 +278,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/knight_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/knight_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -291,7 +291,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/rook_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/rook_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -305,7 +305,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -318,7 +318,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -331,7 +331,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -344,7 +344,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -357,7 +357,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -370,7 +370,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -383,7 +383,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -396,7 +396,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_black.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -411,7 +411,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/rook_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/rook_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -424,7 +424,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/knight_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/knight_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -437,7 +437,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/bishop_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/bishop_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -450,7 +450,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/queen_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/queen_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -463,7 +463,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/king_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/king_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -476,7 +476,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/bishop_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/bishop_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -489,7 +489,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/knight_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/knight_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -502,7 +502,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/rook_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/rook_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -516,7 +516,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -529,7 +529,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -542,7 +542,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -555,7 +555,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -568,7 +568,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -581,7 +581,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -594,7 +594,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
@@ -607,7 +607,7 @@
       <link name='link'>
         <visual name="visual">
           <geometry>
-            <mesh><uri>file:///home/hrithik/kaspace/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
+            <mesh><uri>file:///home/parallels/major_project/src/assignment_1/models/chess_board/meshes/pawn_white.dae</uri>
             <scale>0.5 0.5 0.5 </scale>
             </mesh>
           </geometry>
