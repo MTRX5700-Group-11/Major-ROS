@@ -295,9 +295,15 @@ def convert_sunfish_to_board(sunfish_board):
             board.append(piece_name)
     return board
 
+start_position=tk.StringVar()
+end_position=tk.StringVar()
+
 def move_arm_between_squares(arm):
-    arm.move_piece('a1','h8')
+    global start_position
+    global end_position
+    arm.move_piece(start_position.get(),end_position.get())
     return 
+
 
 def main():
     #create a board
@@ -313,11 +319,11 @@ def main():
     move_label.pack()
     start_position_display = tk.Label(master=move_controls, fg='blue',bg='gold',text="Enter Start Position")
     start_position_display.pack()
-    enter_start = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
+    enter_start = tk.Entry(master=move_controls, fg='black',bg='silver',width=20,textvariable=start_position)
     enter_start.pack()
     end_position_display = tk.Label(master=move_controls, fg='blue',bg='gold',text="Enter End Position")
     end_position_display.pack()
-    enter_end = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
+    enter_end = tk.Entry(master=move_controls, fg='black',bg='silver',width=20,textvariable=end_position)
     enter_end.pack()
     move_button = tk.Button(master=move_controls,text="MOVE",fg='white',bg='red',command=lambda: move_arm_between_squares(arm))
     move_button.pack()
