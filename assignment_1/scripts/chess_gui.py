@@ -1,6 +1,7 @@
 #program to control a chess-playing robot
 import tkinter as tk
-import sunfish
+import GUI.sunfish
+from chess_arm import chess_arm
 #from PIL import ImageTk, Image  
 #global constants used by the GUI
 counter = 0
@@ -19,26 +20,26 @@ center_y = int(window_height/2)
 window.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 
 #add the program icon
-logo = tk.PhotoImage(file='garry_kasparov.png')
+logo = tk.PhotoImage(file='GUI/garry_kasparov.png')
 window.tk.call('wm', 'iconphoto', window._w, logo)
 
 #chess piece image are stored as a list where the zeroth entry is on a black background, 1st entry is on a white background, 
 #let's load all the chess pieces, first black
-black_king = (tk.PhotoImage(file='display_pieces/black_king_on_black.png'),tk.PhotoImage(file='display_pieces/black_king_on_white.png'))
-black_queen = (tk.PhotoImage(file='display_pieces/black_queen_on_black.png'),tk.PhotoImage(file='display_pieces/black_queen_on_white.png'))
-black_rook = (tk.PhotoImage(file='display_pieces/black_rook_on_black.png'),tk.PhotoImage(file='display_pieces/black_rook_on_white.png'))
-black_bishop = (tk.PhotoImage(file='display_pieces/black_bishop_on_black.png'),tk.PhotoImage(file='display_pieces/black_bishop_on_white.png'))
-black_knight = (tk.PhotoImage(file='display_pieces/black_knight_on_black.png'),tk.PhotoImage(file='display_pieces/black_knight_on_white.png'))
-black_pawn = (tk.PhotoImage(file='display_pieces/black_pawn_on_black.png'),tk.PhotoImage(file='display_pieces/black_pawn_on_white.png'))
+black_king = (tk.PhotoImage(file='GUI/display_pieces/black_king_on_black.png'),tk.PhotoImage(file='GUI/display_pieces/black_king_on_white.png'))
+black_queen = (tk.PhotoImage(file='GUI/display_pieces/black_queen_on_black.png'),tk.PhotoImage(file='GUI/display_pieces/black_queen_on_white.png'))
+black_rook = (tk.PhotoImage(file='GUI/display_pieces/black_rook_on_black.png'),tk.PhotoImage(file='GUI/display_pieces/black_rook_on_white.png'))
+black_bishop = (tk.PhotoImage(file='GUI/display_pieces/black_bishop_on_black.png'),tk.PhotoImage(file='GUI/display_pieces/black_bishop_on_white.png'))
+black_knight = (tk.PhotoImage(file='GUI/display_pieces/black_knight_on_black.png'),tk.PhotoImage(file='GUI/display_pieces/black_knight_on_white.png'))
+black_pawn = (tk.PhotoImage(file='GUI/display_pieces/black_pawn_on_black.png'),tk.PhotoImage(file='GUI/display_pieces/black_pawn_on_white.png'))
 #then white
-white_king= (tk.PhotoImage(file='display_pieces/white_king_on_black.png'),tk.PhotoImage(file='display_pieces/white_king_on_white.png'))
-white_queen = (tk.PhotoImage(file='display_pieces/white_queen_on_black.png'),tk.PhotoImage(file='display_pieces/white_queen_on_white.png'))
-white_rook = (tk.PhotoImage(file='display_pieces/white_rook_on_black.png'),tk.PhotoImage(file='display_pieces/white_rook_on_white.png'))
-white_bishop = (tk.PhotoImage(file='display_pieces/white_bishop_on_black.png'),tk.PhotoImage(file='display_pieces/white_bishop_on_white.png'))
-white_knight = (tk.PhotoImage(file='display_pieces/white_knight_on_black.png'),tk.PhotoImage(file='display_pieces/white_knight_on_white.png'))
-white_pawn = (tk.PhotoImage(file='display_pieces/white_pawn_on_black.png'),tk.PhotoImage(file='display_pieces/white_pawn_on_white.png'))
+white_king= (tk.PhotoImage(file='GUI/display_pieces/white_king_on_black.png'),tk.PhotoImage(file='GUI/display_pieces/white_king_on_white.png'))
+white_queen = (tk.PhotoImage(file='GUI/display_pieces/white_queen_on_black.png'),tk.PhotoImage(file='GUI/display_pieces/white_queen_on_white.png'))
+white_rook = (tk.PhotoImage(file='GUI/display_pieces/white_rook_on_black.png'),tk.PhotoImage(file='GUI/display_pieces/white_rook_on_white.png'))
+white_bishop = (tk.PhotoImage(file='GUI/display_pieces/white_bishop_on_black.png'),tk.PhotoImage(file='GUI/display_pieces/white_bishop_on_white.png'))
+white_knight = (tk.PhotoImage(file='GUI/display_pieces/white_knight_on_black.png'),tk.PhotoImage(file='GUI/display_pieces/white_knight_on_white.png'))
+white_pawn = (tk.PhotoImage(file='GUI/display_pieces/white_pawn_on_black.png'),tk.PhotoImage(file='GUI/display_pieces/white_pawn_on_white.png'))
 #and the empty square
-empty = (tk.PhotoImage(file='display_pieces/empty_black.png'),tk.PhotoImage(file='display_pieces/empty_white.png'))
+empty = (tk.PhotoImage(file='GUI/display_pieces/empty_black.png'),tk.PhotoImage(file='GUI/display_pieces/empty_white.png'))
 
 starting_board = ('black_rook','black_knight','black_bishop','black_queen','black_king','black_bishop','black_knight','black_rook',
                   'black_pawn','black_pawn','black_pawn','black_pawn','black_pawn','black_pawn','black_pawn','black_pawn',
