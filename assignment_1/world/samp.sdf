@@ -167,7 +167,7 @@
 
     <!-- Chess Board -->
     <model name="chess_board">
-      <pose>0 0.75 0  0 0 0</pose>
+      <pose>0 0.65 0  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -181,7 +181,7 @@
 
     <!-- Black Pieces -->
     <model name="rook_black_1">
-      <pose>0.21 0.54 0.045  0 0 0</pose>
+      <pose>0.21 0.44 0.045  0 0 0</pose>
       <static>1</static>
       <link name='link'>
         <inertial>
@@ -207,7 +207,7 @@
     </model>
 
     <model name="knight_black_1">
-      <pose>0.15 0.54 0.045  0 0 0</pose>
+      <pose>0.15 0.44 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -221,7 +221,7 @@
     </model>
 
     <model name="bishop_black_1">
-      <pose>0.09 0.54 0.045  0 0 0</pose>
+      <pose>0.09 0.44 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -234,7 +234,7 @@
       </link>
     </model>
     <model name="queen_black">
-      <pose>0.03 0.54 0.045  0 0 0</pose>
+      <pose>0.03 0.44 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -247,7 +247,7 @@
       </link>
     </model>
     <model name="king_black">
-      <pose>-0.03 0.54 0.045  0 0 0</pose>
+      <pose>-0.03 0.44 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -260,7 +260,7 @@
       </link>
     </model>
     <model name="bishop_black_2">
-      <pose>-0.09 0.54 0.045  0 0 0</pose>
+      <pose>-0.09 0.44 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -273,7 +273,7 @@
       </link>
     </model>
     <model name="knight_black_2">
-      <pose>-0.15 0.54 0.045  0 0 0</pose>
+      <pose>-0.15 0.44 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -286,7 +286,7 @@
       </link>
     </model>
     <model name="rook_black_2">
-      <pose>-0.21 0.54 0.045  0 0 0</pose>
+      <pose>-0.21 0.44 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -300,7 +300,7 @@
     </model>
 
      <model name="pawn_black_1">
-      <pose>0.21 0.6 0.045  0 0 0</pose>
+      <pose>0.21 0.5 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -313,7 +313,7 @@
       </link>
     </model>
     <model name="pawn_black_2">
-      <pose>0.15 0.6 0.045  0 0 0</pose>
+      <pose>0.15 0.5 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -326,7 +326,7 @@
       </link>
     </model>
     <model name="pawn_black_3">
-      <pose>0.09 0.6 0.045  0 0 0</pose>
+      <pose>0.09 0.5 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -339,7 +339,7 @@
       </link>
     </model>
     <model name="pawn_black_4">
-      <pose>0.03 0.6 0.045  0 0 0</pose>
+      <pose>0.03 0.5 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -352,7 +352,7 @@
       </link>
     </model>
     <model name="pawn_black_5">
-      <pose>-0.03 0.6 0.045  0 0 0</pose>
+      <pose>-0.03 0.5 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -365,7 +365,7 @@
       </link>
     </model>
     <model name="pawn_black_6">
-      <pose>-0.09 0.6 0.045  0 0 0</pose>
+      <pose>-0.09 0.5 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -378,7 +378,7 @@
       </link>
     </model>
     <model name="pawn_black_7">
-      <pose>-0.15 0.6 0.045  0 0 0</pose>
+      <pose>-0.15 0.5 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -391,7 +391,7 @@
       </link>
     </model>
     <model name="pawn_black_8">
-      <pose>-0.21 0.6 0.045  0 0 0</pose>
+      <pose>-0.21 0.5 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -406,7 +406,7 @@
 
     <!-- White Pieces -->
     <model name="rook_white_1">
-      <pose>0.21 0.96 0.045  0 0 0</pose>
+      <pose>0.21 0.86 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -419,7 +419,7 @@
       </link>
     </model>
     <model name="knight_white_1">
-      <pose>0.15 0.96 0.045  0 0 0</pose>
+      <pose>0.15 0.86 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -432,7 +432,7 @@
       </link>
     </model>
     <model name="bishop_white_1">
-      <pose>0.09 0.96 0.045  0 0 0</pose>
+      <pose>0.09 0.86 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -445,7 +445,7 @@
       </link>
     </model>
     <model name="queen_white">
-      <pose>0.03 0.96 0.045  0 0 0</pose>
+      <pose>0.03 0.86 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -458,7 +458,7 @@
       </link>
     </model>
     <model name="king_white">
-      <pose>-0.03 0.96 0.045  0 0 0</pose>
+      <pose>-0.03 0.86 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -471,7 +471,7 @@
       </link>
     </model>
     <model name="bishop_white_2">
-      <pose>-0.09 0.96 0.045  0 0 0</pose>
+      <pose>-0.09 0.86 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -484,7 +484,7 @@
       </link>
     </model>
     <model name="knight_white_2">
-      <pose>-0.15 0.96 0.045  0 0 0</pose>
+      <pose>-0.15 0.86 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -497,7 +497,7 @@
       </link>
     </model>
     <model name="rook_white_2">
-      <pose>-0.21 0.96 0.045  0 0 0</pose>
+      <pose>-0.21 0.86 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -511,7 +511,7 @@
     </model>
 
      <model name="pawn_white_1">
-      <pose>0.21 0.9 0.045  0 0 0</pose>
+      <pose>0.21 0.8 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -524,7 +524,7 @@
       </link>
     </model>
     <model name="pawn_white_2">
-      <pose>0.15 0.9 0.045  0 0 0</pose>
+      <pose>0.15 0.8 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -537,7 +537,7 @@
       </link>
     </model>
     <model name="pawn_white_3">
-      <pose>0.09 0.9 0.045  0 0 0</pose>
+      <pose>0.09 0.8 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -550,7 +550,7 @@
       </link>
     </model>
     <model name="pawn_white_4">
-      <pose>0.03 0.9 0.045  0 0 0</pose>
+      <pose>0.03 0.8 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -563,7 +563,7 @@
       </link>
     </model>
     <model name="pawn_white_5">
-      <pose>-0.03 0.9 0.045  0 0 0</pose>
+      <pose>-0.03 0.8 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -576,7 +576,7 @@
       </link>
     </model>
     <model name="pawn_white_9">
-      <pose>-0.09 0.9 0.045  0 0 0</pose>
+      <pose>-0.09 0.8 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -589,7 +589,7 @@
       </link>
     </model>
     <model name="pawn_white_7">
-      <pose>-0.15 0.9 0.045  0 0 0</pose>
+      <pose>-0.15 0.8 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">
@@ -602,7 +602,7 @@
       </link>
     </model>
     <model name="pawn_white_8">
-      <pose>-0.21 0.9 0.045  0 0 0</pose>
+      <pose>-0.21 0.8 0.045  0 0 0</pose>
       <static>true</static>
       <link name='link'>
         <visual name="visual">

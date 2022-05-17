@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
 from cmath import pi
+import time
 from re import S
 from shutil import move
 from turtle import home
@@ -16,11 +17,11 @@ class chess_arm():
     def __init__(self):
         self.mgpi = MoveGroupPythonInteface() 
         #Optimal home position
-        self.home_state = [1.57, -1.57, 1.57, -1.57, -1.57, 0.0]
+        self.home_state = [0, -1.57, 1.57, -1.57, -1.57, 0.0]
         #setting the movement height to be 7cm to avoid any collision
-        self.cube_height = 0.01
-        #x,y position of A8 --> x = 0.21 ;y = 0.54 
-        self.a8_position = [0.21,0.54]
+        self.cube_height = 0.03
+        #x,y position of A8 --> x = 0.21 ;y = 0.44 
+        self.a8_position = [0.21,0.44]
         #square width in m
         self.square_width = 0.06
 
@@ -75,7 +76,7 @@ class chess_arm():
     def move_up(self):
         waypoints = []
         current_pose = self.mgpi.get_current_eef_pose().pose
-        current_pose.position.z = 0.07
+        current_pose.position.z = 0.2
         waypoints.append(current_pose)
         (plan,fraction) = self.mgpi.plan_cartesian_path(waypoints)
         self.mgpi.display_trajectory(plan)
@@ -96,28 +97,28 @@ class chess_arm():
         
         #move the arm to home position 
         self.move2home()
-
         #get the x,y of start and end positions
         start_pose= self.make_pose(self.square2xy(start))
         end_pose = self.make_pose(self.square2xy(end))
-
-        print("Moving Down")
-        #lower to 0.1
-        self.move_up()
-
         print("Moving to start point")
         #Pick the cube from start pose
         self.move_arm(start_pose)
+        time.sleep(1)
         #self.mgpi.close_gripper
+        #move back up to 20cm above
         self.move_up()
-        
+        time.sleep(0.5)
         print("Moving to goal point")
         #Place the cube at goal
         self.move_arm(end_pose)
         #self.open_gripper()
-
+        print('Move Complete')
+        time.sleep(1)
+        print('Returning Home')
         self.move2home()
-        print("Waiting for Human..")
+        
+    
+
 ##Defining object class for the blocks to store its pose and id
 class Block:
     def __init__(self,pose,id) :
@@ -133,6 +134,8 @@ def main():
         arm = chess_arm()
 
         input("Initiate")
+        print('Moving Home')
+        arm.move2home()
         start = input("Move from...  \n")
         end = input("To...  \n")
         print("Moving from {} to {}".format(start,end))

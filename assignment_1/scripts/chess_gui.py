@@ -9,6 +9,7 @@ counter = 0
 
 #create the main window
 window = tk.Tk()
+#window.attributes('-zoomed', True)
 window.title('Automated Kasparov')
 #get full-screen size
 window_width = window.winfo_screenwidth()
@@ -294,8 +295,13 @@ def convert_sunfish_to_board(sunfish_board):
             board.append(piece_name)
     return board
 
+def move_arm_between_squares(arm):
+    arm.move_piece('a1','h8')
+    return 
+
 def main():
     #create a board
+    arm = chess_arm()
     board_squares = render_blank_board()
     board_state = starting_board
     board_squares = reset_board(board_squares,board_state)
@@ -303,21 +309,26 @@ def main():
     black_castle_rights = (True,True)
     move_controls = tk.Frame(bg='silver')
     move_controls.pack(side = tk.LEFT)
-    move_label = tk.Label(master=move_controls, fg='blue',bg='gold',text="Move Controls")
+    move_label = tk.Label(master=move_controls, fg='blue',bg='gold',text="Piece Move Controls")
     move_label.pack()
-    x_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set X")
-    x_set.pack()
-    enter_x = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
-    enter_x.pack()
-    y_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set Y")
-    y_set.pack()
-    enter_y = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
-    enter_y.pack()
-    piece_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set Piece")
-    piece_set.pack()
-    enter_piece = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
-    enter_piece.pack()
-    
+    start_position_display = tk.Label(master=move_controls, fg='blue',bg='gold',text="Enter Start Position")
+    start_position_display.pack()
+    enter_start = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
+    enter_start.pack()
+    end_position_display = tk.Label(master=move_controls, fg='blue',bg='gold',text="Enter End Position")
+    end_position_display.pack()
+    enter_end = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
+    enter_end.pack()
+    move_button = tk.Button(master=move_controls,text="MOVE",fg='white',bg='red',command=lambda: move_arm_between_squares(arm))
+    move_button.pack()
+    #x_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set X")
+    #x_set.pack()
+    #enter_x = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
+    #enter_x.pack()
+    #y_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set Y")
+    #y_set.pack()
+    #enter_y = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
+    #enter_y.pack()
     window.mainloop()
 
 
