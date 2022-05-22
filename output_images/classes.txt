@@ -7,6 +7,7 @@ queen_black
 king_black
 king_white
 pawn_black
+white_pawn
 rook_black
 pawn_white
 rook_white
