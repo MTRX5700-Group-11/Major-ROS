@@ -1,0 +1,13 @@
+knight_white
+knight_black
+bishop_black
+bishop_white
+queen_white
+queen_black
+king_black
+king_white
+pawn_black
+white_pawn
+rook_black
+pawn_white
+rook_white
