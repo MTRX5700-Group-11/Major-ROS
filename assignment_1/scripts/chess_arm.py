@@ -21,7 +21,7 @@ class chess_arm():
         #Optimal home position
         self.home_state = [0, -1.57, 1.57, -1.57, -1.57, 0.0]
         #setting the movement height to be 7cm to avoid any collision
-        self.cube_height = 0.015
+        self.cube_height = 0.018
         #x,y position of A8 --> x = 0.21 ;y = 0.44 
         self.a8_position = [0.21,0.44]
         #square width in m
@@ -173,29 +173,40 @@ def main():
     try:
         arm = chess_arm()
 
-        input("Initiate")
+        input("Initiate Demo..")
         print('Moving Home')
         arm.move2home()
+
+        arm.move_arm(arm.make_pose(arm.square2xy('A8')))
+        input("Position Board......")
+        arm.move2home()
+        
+        input("Enter to Continue...")
         start = 'D7'
         end =  'D5'
         print("Moving from {} to {}".format(start,end))
         arm.move_piece(start,end)
 
+        input("Enter to Continue..")
         start = 'C8'
         end =  'G4'
         print("Moving from {} to {}".format(start,end))
         arm.move_piece(start,end)
 
+        
+        input("Enter to Continue..")
         start = 'G4'
         end =  'E2'
         print("Moving from {} to {}".format(start,end))
         arm.attack_piece(start,end)
 
+        input("Enter to Continue..")
         start = 'E2'
         end =  'D1'
         print("Moving from {} to {}".format(start,end))
         arm.attack_piece(start,end)
 
+        input("Enter to Continue..")
         print("Spawning Queen")
         arm.spawn_piece('QUEEN','D8')
         rospy.spin()
