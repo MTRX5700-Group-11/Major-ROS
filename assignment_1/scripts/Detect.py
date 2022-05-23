@@ -113,6 +113,7 @@ if __name__ == '__main__':
       # Give the weight files to the model and load the network using       them.
       modelWeights = "bestMajor.onnx"
       net = cv2.dnn.readNet(modelWeights)
+      
       # Process image.
       detections = pre_process(frame, net)
       img,labels,x_centres,y_centres = post_process(frame.copy(), detections)
