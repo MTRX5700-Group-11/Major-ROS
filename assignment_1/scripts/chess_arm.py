@@ -1,13 +1,15 @@
 #! /usr/bin/env python
 
 from cmath import pi
+from email.policy import default
+from pickle import NONE
 import time
 from re import S
 from shutil import move
 from turtle import home
 from moveit_python import MoveGroupInterface
 import rospy
-from move_group_interface_chess import MoveGroupPythonInteface
+from move_group_interface import MoveGroupPythonInteface
 from std_msgs.msg import Float32MultiArray
 from geometry_msgs.msg import Pose
 from gazebo_msgs.msg import ModelStates
@@ -19,11 +21,13 @@ class chess_arm():
         #Optimal home position
         self.home_state = [0, -1.57, 1.57, -1.57, -1.57, 0.0]
         #setting the movement height to be 7cm to avoid any collision
-        self.cube_height = 0.03
+        self.cube_height = 0.015
         #x,y position of A8 --> x = 0.21 ;y = 0.44 
         self.a8_position = [0.21,0.44]
         #square width in m
         self.square_width = 0.06
+        #position to put the removed piece
+        self.remove_position = 'J4'
 
 
     #function to move the arm to home position
@@ -91,12 +95,24 @@ class chess_arm():
         (plan,fraction) = self.mgpi.plan_cartesian_path(waypoints)
         self.mgpi.display_trajectory(plan)
         self.mgpi.execute_plan(plan)
+    
+    def hold(self):
+        self.mgpi.open_gripper()
+        rospy.sleep(2)
+        self.mgpi.close_gripper()
+        rospy.sleep(2)
+    
+    def release(self):
+        rospy.sleep(2)
+        self.mgpi.open_gripper()
+        rospy.sleep(2)
 
     ### move a piece from one square to another
     def move_piece(self,start,end):
         
         #move the arm to home position 
         self.move2home()
+        self.mgpi.open_gripper()
         #get the x,y of start and end positions
         start_pose= self.make_pose(self.square2xy(start))
         end_pose = self.make_pose(self.square2xy(end))
@@ -104,6 +120,7 @@ class chess_arm():
         #Pick the cube from start pose
         self.move_arm(start_pose)
         time.sleep(1)
+        self.hold()
         #self.mgpi.close_gripper
         #move back up to 20cm above
         self.move_up()
@@ -111,14 +128,37 @@ class chess_arm():
         print("Moving to goal point")
         #Place the cube at goal
         self.move_arm(end_pose)
+        self.release()
         #self.open_gripper()
         print('Move Complete')
         time.sleep(1)
         print('Returning Home')
         self.move2home()
         
-    
+    def attack_piece(self,start,end):
+        self.move_piece(end,self.remove_position)
+        self.move_piece(start,end)
 
+    def spawn_piece(self,piece,square):
+        
+        default_square = 'D9'
+        piece = piece.upper()
+        if piece=='KING':
+            pass
+        elif piece=='QUEEN':
+            pass
+        elif piece=='BISHOP':
+            pass
+        elif piece=='PAWN':
+            pass
+        elif piece=='KNIGHT':
+            pass    
+        elif piece=='ROOK':
+            pass
+        else:
+            piece_square = default_square
+
+        self.move_piece(piece_square,square)
 ##Defining object class for the blocks to store its pose and id
 class Block:
     def __init__(self,pose,id) :
@@ -136,11 +176,28 @@ def main():
         input("Initiate")
         print('Moving Home')
         arm.move2home()
-        start = input("Move from...  \n")
-        end = input("To...  \n")
+        start = 'D7'
+        end =  'D5'
         print("Moving from {} to {}".format(start,end))
         arm.move_piece(start,end)
 
+        start = 'C8'
+        end =  'G4'
+        print("Moving from {} to {}".format(start,end))
+        arm.move_piece(start,end)
+
+        start = 'G4'
+        end =  'E2'
+        print("Moving from {} to {}".format(start,end))
+        arm.attack_piece(start,end)
+
+        start = 'E2'
+        end =  'D1'
+        print("Moving from {} to {}".format(start,end))
+        arm.attack_piece(start,end)
+
+        print("Spawning Queen")
+        arm.spawn_piece('QUEEN','D8')
         rospy.spin()
     except rospy.ROSInterruptException:
         return
