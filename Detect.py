@@ -71,6 +71,11 @@ def post_process(input_image, outputs):
                     box = np.array([left, top, width, height])
                     boxes.append(box)
 
+    # Define the arrays in which the labels, and it's x and y centrer are stored
+    labels = []
+    x_centres = []
+    y_centres = []
+    
     # Perform non maximum suppression to eliminate redundant, overlapping boxes with lower confidences.
     indices = cv2.dnn.NMSBoxes(boxes, confidences, CONFIDENCE_THRESHOLD, NMS_THRESHOLD)
     for i in indices:
@@ -85,7 +90,17 @@ def post_process(input_image, outputs):
         label = "{}:{:.2f}".format(classes[class_ids[i]], confidences[i])             
         # Draw label.             
         draw_label(input_image, label, left, top)
-    return input_image
+        
+        # Find the centre of the label
+        x_centre = left + width/2
+        y_centre = top + height/2
+        
+        # Add the label and it's centre to the appropriate array
+        labels.append(label)
+        x_centres.append(x_centre)
+        y_centres.append(y_centre)
+        
+    return input_image,labels,x_centres,y_centres
 
 if __name__ == '__main__':
       # Load class names.
@@ -100,7 +115,7 @@ if __name__ == '__main__':
       net = cv2.dnn.readNet(modelWeights)
       # Process image.
       detections = pre_process(frame, net)
-      img = post_process(frame.copy(), detections)
+      img,labels,x_centres,y_centres = post_process(frame.copy(), detections)
       """
       Put efficiency information. The function getPerfProfile returns       the overall time for inference(t) 
       and the timings for each of the layers(in layersTimes).
