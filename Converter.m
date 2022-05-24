@@ -31,6 +31,16 @@ for idx = 1:numFIle
    namePeP = trueName + "PeP"+".png"; % name
    imwrite(imgPeP,namePeP); % write img
 
+   % poisson
+   imgPoi = imnoise(currentImg,'poisson'); % content
+   namePoi = trueName + "Poi"+".png"; % name
+   imwrite(imgPoi,namePoi); % write img
+
+   % speckle
+   imgSpk = imnoise(currentImg,'speckle'); % content
+   nameSpk = trueName + "Spk"+".png"; % name
+   imwrite(imgSpk,nameSpk); % write img
+
    % Contrast 
    imgCon = imadjust(currentImg,stretchlim(currentImg),[]); % content
    nameCon = trueName + "Con"+".png"; % name
@@ -40,6 +50,11 @@ for idx = 1:numFIle
    imgSat = imtweak(currentImg,'hsv',[0 1.5 1]); % content
    nameSat = trueName + "Sat"+".png"; % name
    imwrite(imgSat,nameSat); % write img
+
+   % HSL
+   imgHSL = imtweak(currentImg,'hsl',[0 1.5 1]); % content
+   nameHSL = trueName + "HSL"+".png"; % name
+   imwrite(imgHSL,nameHSL); % write img
    
 end
 
@@ -66,6 +81,14 @@ for idx = 1:numFIle
    namePeP = trueName + "PeP"+".txt"; % name
    copyfile(name, namePeP);
 
+   % poisson
+   namePoi = trueName + "Poi"+".txt"; % name
+   copyfile(name, namePoi);
+
+   % speckle
+   nameSpk = trueName + "Spk"+".txt"; % name
+   copyfile(name, nameSpk);
+
    % Contrast
    nameCon = trueName + "Con"+".txt"; % name
    copyfile(name, nameCon);
@@ -73,4 +96,8 @@ for idx = 1:numFIle
    % Saturation
    nameSat = trueName + "Sat"+".txt"; % name
    copyfile(name, nameSat);
+
+   % HSL
+   nameHSL = trueName + "HSL"+".txt"; % name
+   copyfile(name, nameHSL);
 end
