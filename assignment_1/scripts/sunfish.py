@@ -1,6 +1,6 @@
 #This code originally written by Thomas Ahle
 #Available online at https://github.com/thomasahle/sunfish
-#Modifications where indicated by Henry Chadban on May 14/15 2022
+#Modifications where indicated by Henry Chadban on May 14-26th 2022
 
 #!/usr/bin/env pypy
 # -*- coding: utf-8 -*-

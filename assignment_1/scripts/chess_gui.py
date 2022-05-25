@@ -1,6 +1,6 @@
 #program to control a chess-playing robot
 import tkinter as tk
-import GUI.sunfish
+import sunfish
 from chess_arm import chess_arm
 #from PIL import ImageTk, Image  
 #global constants used by the GUI
