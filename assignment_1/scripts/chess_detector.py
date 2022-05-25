@@ -1,6 +1,9 @@
 import cv2
 import numpy as np
 import os
+import re
+from xy2square import xy2square
+from chess_pieces import label2number
 
 class ChessDetector():
     def __init__(self) :
@@ -30,10 +33,22 @@ class ChessDetector():
         with open(self.classesFile, 'rt') as f:
             self.classes = f.read().rstrip('\n').split('\n')
 
-        model_filename = os.path.join(dirname, 'detection_files/bestMajor.onnx')
+        model_filename = os.path.join(dirname, 'detection_files/chess.onnx')
         self.modelWeights = model_filename
         self.net = cv2.dnn.readNet(self.modelWeights)
-        self.image = None
+        
+        self.labelled_image = None
+    
+    
+
+    def detection2matrix(self,labels,x_centres,y_centres):
+        chess_state = np.zeros((8,8))
+
+        for i in range(0,len(labels)):
+            r,c = xy2square(x_centres[i],y_centres[i])
+            chess_state[r][c]=label2number(labels[i])
+        return chess_state
+
     
     def detect_image(self,image):
         self.image = image
@@ -43,8 +58,10 @@ class ChessDetector():
         label = 'Inference time: %.2f ms' % (t * 1000.0 /  cv2.getTickFrequency())
         print(label)
         cv2.putText(img, label, (20, 40), self.font_face, self.font_scale,  (0, 0, 255), self.thickness, cv2.LINE_AA)
-        cv2.imshow('Detected_Output', img)
-
+        self.labelled_image = img
+        state = self.detection2matrix(labels,x_centres,y_centres)
+        return img,state
+        
     def draw_label(self,im, label, x, y):
         """Draw text onto image at location."""
         # Get text size.
