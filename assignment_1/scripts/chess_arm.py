@@ -9,7 +9,11 @@ from shutil import move
 from turtle import home
 from moveit_python import MoveGroupInterface
 import rospy
-from move_group_interface import MoveGroupPythonInteface
+sim = True
+if sim:
+    from move_group_interface_chess import MoveGroupPythonInteface #this is for simulation
+else:
+    from move_group_interface import MoveGroupPythonInteface #this is for reality
 from std_msgs.msg import Float32MultiArray
 from geometry_msgs.msg import Pose
 from gazebo_msgs.msg import ModelStates
@@ -97,22 +101,32 @@ class chess_arm():
         self.mgpi.execute_plan(plan)
     
     def hold(self):
-        self.mgpi.open_gripper()
-        rospy.sleep(2)
-        self.mgpi.close_gripper()
-        rospy.sleep(2)
+        global sim
+        if sim:
+            rospy.sleep(2)
+        else:
+            self.mgpi.open_gripper()
+            rospy.sleep(2)
+            self.mgpi.close_gripper()
+            rospy.sleep(2)
     
     def release(self):
-        rospy.sleep(2)
-        self.mgpi.open_gripper()
-        rospy.sleep(2)
+        if sim:
+            rospy.sleep(2)
+        else:
+            rospy.sleep(2)
+            self.mgpi.open_gripper()
+            rospy.sleep(2)
 
     ### move a piece from one square to another
     def move_piece(self,start,end):
         
         #move the arm to home position 
         self.move2home()
-        self.mgpi.open_gripper()
+        if sim:
+            pass
+        else:
+            self.mgpi.open_gripper()
         #get the x,y of start and end positions
         start_pose= self.make_pose(self.square2xy(start))
         end_pose = self.make_pose(self.square2xy(end))
@@ -129,7 +143,7 @@ class chess_arm():
         #Place the cube at goal
         self.move_arm(end_pose)
         self.release()
-        #self.open_gripper()
+        self.open_gripper()
         print('Move Complete')
         time.sleep(1)
         print('Returning Home')
