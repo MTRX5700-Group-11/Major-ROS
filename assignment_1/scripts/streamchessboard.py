@@ -15,7 +15,6 @@ import PIL
 import sys
 import time
 from chess_detector import ChessDetector
-
 import os
 class DetectionInfo():
     def __init__(self,detection,camera_params,tag_size=0.04):

@@ -1,6 +1,0 @@
-rook_black
-pawn_black
-bishop_black
-king_black
-queen_white
-pawn_white

@@ -26,6 +26,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 # Depend on system install of Gazebo
 find_package(gazebo REQUIRED)
+find_package(Protobuf REQUIRED)
 
 add_service_files(
   FILES

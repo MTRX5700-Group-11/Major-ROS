@@ -1,5 +1,8 @@
+#! /usr/bin/env python
 #program to control a chess-playing robot
-import tkinter as tk
+from sys import version_info
+import Tkinter as tk #python2
+#import tkinter as tk #python3
 import sunfish
 import time
 import random
@@ -13,7 +16,6 @@ import rospy
 #global constants used by the GUI
 counter = 0
 #dimensions of the symbols representing the pieces
-
 #create the main window
 window = tk.Tk()
 #window.attributes('-zoomed', True)
@@ -25,7 +27,10 @@ window_height = window.winfo_screenheight()
 center_x = int(window_width/2)
 center_y = int(window_height/2)
 # set the position of the window to the center of the screen
-window.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+# widthxheight+x+y
+# window.geometry()
+#window.geometry(f"{window_width}x{window_height}+{center_x}+{center_y}") #python3
+window.geometry(str(window_width)+"x"+str(window_height)+str(center_x)+str(center_y))   #python2
 
 #add the program icon
 logo = tk.PhotoImage(file='GUI/garry_kasparov.png')
@@ -395,12 +400,12 @@ def update_board(stream,detector):
 
 def main():
     
-    arm = chess_arm()#initialise the arm
+    #arm = chess_arm()#initialise the arm
     #render the board in the GUI
     board_squares = render_blank_board()
     #board_state = starting_board
     #board_squares = reset_board(board_squares,board_state)
-    rospy.Rate(1)
+    #rospy.Rate(1)
     stream = StreamChessBoard()#create the object to stream in the chess images
     detector = ChessDetector()#create the object to detect board state from the chess images
     #create the state of the board

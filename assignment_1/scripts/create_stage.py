@@ -1,8 +1,7 @@
 #! /usr/bin/env python
 
 # Author: Tejaswi Digumarti (tejaswi.digumarti@sydney.edu.au)
-# Updated: Jack Naylor (jack.naylor@sydney.edu.au) 21/2/22
-# Description: This is the file that creates the robot arena for assignment 1 with 2 goals and 6 blocks.
+# Description: This is the file that creates the robot arena for assignment 1.
 
 import rospy
 import geometry_msgs.msg
@@ -157,17 +156,16 @@ class CreateStage(object):
 		obj_pose.pose.position.z = small_z/2
 		self.add_block((table_width, table_length, small_z), obj_pose, "table")
 
-		# Randomly put 6 objects
-		# Block position[0-5], goal position [6,7]
-		position_x = np.random.choice(10, 8, replace=False)
-		position_y = np.random.choice(7, 8)
-		position_x = -0.34 + 0.078 * position_x
-		position_y = 0.25 + 0.09 * position_y
-
+		# Randomly put 5 objects
+		# Block position[0-4], goal position [5]
+		position_x = np.random.choice(8, 6, replace=False)
+		position_y = np.random.choice(5, 6)
+		position_x = -0.32 + 0.08 * position_x
+		position_y = 0.25 + 0.08 * position_y
 		# All on the same level
 		obj_pose.pose.position.z = small_z + block_dim / 2
 		i = 0
-		for i in range(6):
+		for i in range(5):
 			obj_pose.pose.position.x = position_x[i]
 			obj_pose.pose.position.y = position_y[i]
 			name = ("Block%d" % (i + 1))
@@ -175,15 +173,9 @@ class CreateStage(object):
 			# print(position_x[i], position_y[i])
 			self.add_block(block_size, obj_pose, name)
 
-		# add the Goal positions
-		obj_pose.pose.position.x = position_x[6]
-		obj_pose.pose.position.y = position_y[6]
+		# add the target position
+		obj_pose.pose.position.x = position_x[5]
+		obj_pose.pose.position.y = position_y[5]
 		obj_pose.pose.position.z = small_z + small_z / 2
-		self.add_block((block_dim, block_dim, small_z), obj_pose, "Goal1")
-		
-		obj_pose.pose.position.x = position_x[7]
-		obj_pose.pose.position.y = position_y[7]
-		obj_pose.pose.position.z = small_z + small_z / 2
-		self.add_block((block_dim, block_dim, small_z), obj_pose, "Goal2")
-		
+		self.add_block((block_dim, block_dim, small_z), obj_pose, "goal")
 		return position_x, position_y

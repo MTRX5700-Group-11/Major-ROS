@@ -1,7 +1,6 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 #
 # Author: Tejaswi Digumarti (tejaswi.digumarti@sydney.edu.au)
-# Updated: Jack Naylor (jack.naylor@sydney.edu.au) 21/2/22
 # Description: This code defines the MoveGroupPythonInterface class to control the UR5e arm using ROS and MoveIt!
 
 import rospy
@@ -48,59 +47,64 @@ class MoveGroupPythonInteface(object):
 
     def __init__(self):
         super(MoveGroupPythonInteface, self).__init__()
-
+        print("1")
         # First initialize moveit_commander and a rospy node:
         moveit_commander.roscpp_initialize(sys.argv)
+        print("2")
         rospy.init_node('build_tower_node', anonymous=True)
-
+        print("3")
         # Instantiate a RobotCommander object. Provides information such as the robot's
         # kinematic model and the robot's current joint states
         self.robot = moveit_commander.RobotCommander()
-
+        print("4")
         # Instantiate a PlanningSceneInterface object.  This provides a remote interface
         # for getting, setting, and updating the robot's internal understanding of the
         # surrounding world:
         self.scene_interface = moveit_commander.PlanningSceneInterface()
+        print("5")
         self.scene = moveit_commander.PlanningScene()
-
+        print("6")
         # Instantiate a MoveGroupCommander object.
         # This object is an interface to a planning group (group of joints).
         # In our case the group consists of the primary joints in the UR5e robot, defined as "manipulator".
         # This interface can be used to plan and execute motions.
         group_name = "manipulator"
+        print("6")
         self.move_group = moveit_commander.MoveGroupCommander(group_name)
-
+        print("7")
         # Create a DisplayTrajectory ROS publisher which is used to display trajectories in Rviz:
         self.display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',
                                                             moveit_msgs.msg.DisplayTrajectory,
                                                             queue_size=20)
-
+        print("8")
         # Allow re planning to increase the odds of finding a solution
         self.move_group.allow_replanning(True)
+        print("9")
         # Set the number of planning attempts - By default it is 1, we are increasing it to 10
         self.move_group.set_num_planning_attempts(10)
+        print("10")
         # Set the amount of time allocated for generating a plan - By default it is 5s
         self.move_group.set_planning_time(20)
-
+        print("11")
         # Misc variables
         self.planning_frame = self.move_group.get_planning_frame()
         self.eef_link = self.move_group.get_end_effector_link()
         self.group_names = self.robot.get_group_names()
         self.home_joint_angles = self.assign_home()
-
+        print("12")
         # # Build the stage for RViz (not necessary if RViz is not used)
-        self.stage = CreateStage(self.scene_interface, self.robot, self.eef_link)
+        #self.stage = CreateStage(self.scene_interface, self.robot, self.eef_link)
         # Block [0-4] and goal [5] positions:
-        pos_x, pos_y= self.stage.build_stage()
-        print(pos_x)
-        print(pos_y)
+        #pos_x, pos_y= self.stage.build_stage()
+        #print(pos_x)
+        #print(pos_y)
 
         # randomly move the blocks and goal postion
-        self.move_blocks_by_magic(pos_x, pos_y)
-
+        #self.move_blocks_by_magic(pos_x, pos_y)
+        print("13")
         # setup gripper and activate it
-        self.gripper = GripperController(self.stage)
-        self.gripper.activate_gripper()
+        #self.gripper = GripperController(self.stage)
+        #self.gripper.activate_gripper()
         # print(B_G_position_z)
 
 
@@ -268,9 +272,9 @@ class MoveGroupPythonInteface(object):
         Move the blocks to randomized positions
         """
         state_msg = ModelState()
-        state_msg.model_name = 'goal_1'
-        state_msg.pose.position.x = pos_x[6]
-        state_msg.pose.position.y = pos_y[6]
+        state_msg.model_name = 'goal'
+        state_msg.pose.position.x = pos_x[5]
+        state_msg.pose.position.y = pos_y[5]
         state_msg.pose.position.z = 0.041
         state_msg.pose.orientation.x = 0
         state_msg.pose.orientation.y = 0
@@ -282,22 +286,7 @@ class MoveGroupPythonInteface(object):
             resp = set_state(state_msg)
         except rospy.ServiceException as e:
             print("Service call failed: %s" % e)
-        
-        state_msg.model_name = 'goal_2'
-        state_msg.pose.position.x = pos_x[7]
-        state_msg.pose.position.y = pos_y[7]
-        state_msg.pose.position.z = 0.041
-        state_msg.pose.orientation.x = 0
-        state_msg.pose.orientation.y = 0
-        state_msg.pose.orientation.z = 0
-        state_msg.pose.orientation.w = 0
-        rospy.wait_for_service('/gazebo/set_model_state')
-        try:
-            set_state = rospy.ServiceProxy('/gazebo/set_model_state', SetModelState)
-            resp = set_state(state_msg)
-        except rospy.ServiceException as e:
-            print("Service call failed: %s" % e)
-        for i in range(6):
+        for i in range(5):
             state_msg.model_name = ("block_%d" % (i + 1))
             state_msg.pose.position.x = pos_x[i]
             state_msg.pose.position.y = pos_y[i]
