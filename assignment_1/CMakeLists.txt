@@ -7,6 +7,8 @@ project(assignment_1)
 find_package(catkin REQUIRED
 	COMPONENTS
  	rospy 
+  std_msgs
+  message_generation
  	interactive_markers
     pluginlib
     moveit_core
@@ -16,8 +18,15 @@ find_package(catkin REQUIRED
     geometric_shapes
     tf2_ros
     tf2_eigen
-    tf2_geometry_msgs
-    message_generation
+    tf2_geometry_msgs    
+    )
+    add_message_files(
+    FILES
+    arm_command.msg
+    )
+  generate_messages(
+    DEPENDENCIES
+    std_msgs
     )
 
 ## System dependencies are found with CMake's conventions
@@ -25,19 +34,12 @@ find_package(Eigen3 REQUIRED)
 
 
 
-add_message_files(
-  FILES
-  arm_command.msg
-)
-generate_messages(
-  DEPENDENCIES
-  std_msgs
-)
+
 ## catkin specific configuration
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES assignment_1
-    CATKIN_DEPENDS message_runtime 
+    CATKIN_DEPENDS rospy message_runtime 
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
