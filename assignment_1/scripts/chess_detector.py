@@ -33,7 +33,7 @@ class ChessDetector():
         with open(self.classesFile, 'rt') as f:
             self.classes = f.read().rstrip('\n').split('\n')
 
-        model_filename = os.path.join(dirname, 'detection_files/chess.onnx')
+        model_filename = os.path.join(dirname, 'detection_files/chess_weight.onnx')
         self.modelWeights = model_filename
         self.net = cv2.dnn.readNet(self.modelWeights)
         
