@@ -17,15 +17,26 @@ find_package(catkin REQUIRED
     tf2_ros
     tf2_eigen
     tf2_geometry_msgs
+    message_generation
     )
 
 ## System dependencies are found with CMake's conventions
 find_package(Eigen3 REQUIRED)
 
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+
 ## catkin specific configuration
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES assignment_1
+    CATKIN_DEPENDS message_runtime 
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
+)
+add_message_files(
+  FILES
+  arm_command.msg
 )

@@ -1,11 +1,15 @@
 #! /usr/bin/env python
+
+from cmath import pi
+from email.policy import default
+from pickle import NONE
 import time
 from re import S
 from shutil import move
 from turtle import home
 from moveit_python import MoveGroupInterface
 import rospy
-sim = False
+sim = True
 if sim:
     from move_group_interface_chess import MoveGroupPythonInteface #this is for simulation
 else:
@@ -13,74 +17,21 @@ else:
 from std_msgs.msg import Float32MultiArray
 from geometry_msgs.msg import Pose
 from gazebo_msgs.msg import ModelStates
-from robotiq_2f_gripper_control.msg import _Robotiq2FGripper_robot_output as gripperMsg
 from tf.transformations import *
-
-class GripperController():
-    """
-    Class to control the gripper
-    """
-    def __init__(self):
-        # rospy.init_node('GripperControllerNode')
-        self.pub = rospy.Publisher('Robotiq2FGripperRobotOutput',
-                                   gripperMsg.Robotiq2FGripper_robot_output,
-                                   queue_size=20)
-        self.command = gripperMsg.Robotiq2FGripper_robot_output()
-
-    def activate_gripper(self):
-        """
-        Publishes the command to activate the gripper and set its speed and force.
-        """
-        self.command.rACT = 1       # activate the gripper
-        self.command.rGTO = 1
-        self.command.rSP = 255      # sets the speed of the gripper
-        self.command.rFR = 150      # sets the force that the gripper applies
-        self.pub.publish(self.command)
-        rospy.sleep(1)
-
-
-    def deactivate_gripper(self):
-        """
-        Publishes the command to deactivate the gripper
-        """
-        self.command.rACT = 0       # deactivate gripper
-        self.pub.publish(self.command)
-        rospy.sleep(1)
-
-    def open_gripper(self, object_to_detach=None):
-        """
-        Publishes the command to open the gripper
-        """
-        self.command.rPR = 0        # set gripper position to open
-        self.pub.publish(self.command)
-        rospy.sleep(1)
-
-
-    def close_gripper(self, object_to_attach=None):
-        """
-        Publishes the command to close the gripper
-        """
-        self.command.rPR = 255      # set gripper position to closed
-        self.pub.publish(self.command)
-        rospy.sleep(1)
-
-
 
 class chess_arm():
     def __init__(self):
         self.mgpi = MoveGroupPythonInteface() 
-        self.gripper = GripperController()
-        self.gripper.activate_gripper()
         #Optimal home position
         self.home_state = [0, -1.57, 1.57, -1.57, -1.57, 0.0]
         #setting the movement height to be 7cm to avoid any collision
-        self.cube_height = 0.03
+        self.cube_height = 0.018
         #x,y position of A8 --> x = 0.21 ;y = 0.44 
         self.a8_position = [0.21,0.44]
         #square width in m
         self.square_width = 0.06
-        self.remove_position = 'A0'
-        
+        #position to put the removed piece
+        self.remove_position = 'J4'
 
 
     #function to move the arm to home position
@@ -148,32 +99,34 @@ class chess_arm():
         (plan,fraction) = self.mgpi.plan_cartesian_path(waypoints)
         self.mgpi.display_trajectory(plan)
         self.mgpi.execute_plan(plan)
-
     
-    def hold(self,pose):
-        self.cube_height = -0.015
-        self.move_static(pose)
-        self.cube_height = 0.03
-        self.gripper.open_gripper()
-        rospy.sleep(2)
-        self.gripper.close_gripper()
-        rospy.sleep(2)
+    def hold(self):
+        global sim
+        if sim:
+            rospy.sleep(2)
+        else:
+            self.mgpi.open_gripper()
+            rospy.sleep(2)
+            self.mgpi.close_gripper()
+            rospy.sleep(2)
     
-    def release(self,pose):
-        rospy.sleep(2)
-        self.cube_height = -0.015
-        self.move_static(pose)
-        self.cube_height = 0.03
-        self.gripper.open_gripper()
-        rospy.sleep(2)
+    def release(self):
+        if sim:
+            rospy.sleep(2)
+        else:
+            rospy.sleep(2)
+            self.mgpi.open_gripper()
+            rospy.sleep(2)
 
     ### move a piece from one square to another
     def move_piece(self,start,end):
         
         #move the arm to home position 
-        self.gripper.open_gripper()
         self.move2home()
-        self.gripper.open_gripper()
+        if sim:
+            pass
+        else:
+            self.mgpi.open_gripper()
         #get the x,y of start and end positions
         start_pose= self.make_pose(self.square2xy(start))
         end_pose = self.make_pose(self.square2xy(end))
@@ -181,16 +134,15 @@ class chess_arm():
         #Pick the cube from start pose
         self.move_arm(start_pose)
         time.sleep(1)
-        self.hold(start_pose)
-        #self.gripper.close_gripper
+        self.hold()
+        #self.mgpi.close_gripper
         #move back up to 20cm above
         self.move_up()
         time.sleep(0.5)
         print("Moving to goal point")
         #Place the cube at goal
         self.move_arm(end_pose)
-        self.release(end_pose)
-        #self.open_gripper()
+        self.release()
         print('Move Complete')
         time.sleep(1)
         print('Returning Home')
@@ -220,9 +172,6 @@ class chess_arm():
             piece_square = default_square
 
         self.move_piece(piece_square,square)
-        
-    
-
 ##Defining object class for the blocks to store its pose and id
 class Block:
     def __init__(self,pose,id) :
@@ -231,47 +180,48 @@ class Block:
 
 
    
+
 def main():
     
     try:
         arm = chess_arm()
 
-        raw_input("Initiate Demo..")
+        input("Initiate Demo..")
         print('Moving Home')
         arm.move2home()
 
         arm.move_arm(arm.make_pose(arm.square2xy('A8')))
-        raw_input("Position Board......")
+        input("Position Board......")
         arm.move2home()
         
-        raw_input("Enter to Continue...")
-        start = 'A1'
-        end =  'A8'
+        input("Enter to Continue...")
+        start = 'D7'
+        end =  'D5'
         print("Moving from {} to {}".format(start,end))
         arm.move_piece(start,end)
 
-        raw_input("Enter to Continue..")
-        start = 'A8'
-        end =  'H1'
+        input("Enter to Continue..")
+        start = 'C8'
+        end =  'G4'
         print("Moving from {} to {}".format(start,end))
         arm.move_piece(start,end)
 
         
-        raw_input("Enter to Continue..")
-        start = 'H1'
-        end =  'H8'
+        input("Enter to Continue..")
+        start = 'G4'
+        end =  'E2'
         print("Moving from {} to {}".format(start,end))
         arm.attack_piece(start,end)
 
-        raw_input("Enter to Continue..")
-        start = 'H8'
-        end =  'D5'
+        input("Enter to Continue..")
+        start = 'E2'
+        end =  'D1'
         print("Moving from {} to {}".format(start,end))
         arm.attack_piece(start,end)
 
-        # raw_input("Enter to Continue..")
-        # print("Spawning Queen")
-        # arm.spawn_piece('QUEEN','D8')
+        input("Enter to Continue..")
+        print("Spawning Queen")
+        arm.spawn_piece('QUEEN','D8')
         rospy.spin()
     except rospy.ROSInterruptException:
         return
