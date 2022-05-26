@@ -12,30 +12,28 @@ def xy2square(pix_x,pix_y):
     board_len_x = 48
     board_len_y = 48
     
-    # Define the bix to board ratio for x and y
+    # Define the pix to board ratio for x and y
     pix2board_x = board_len_x/img_len_x
     pix2board_y = (board_len_y/img_len_y)
     
     # Convert the pixel to board coordinates
     x = (pix_x * pix2board_x)
     y = (pix_y * pix2board_y)
-    
-    # 1-8, h-a
-    # H1 is top left, A8 is bottom right
-
-    # Define the centre of A8
-    a1_position = [45,45]
-
-    # Get x0 and y0 positions from A8
-    x0 = a1_position[0]
-    y0 = a1_position[1]
+    x0 = 0
+    y0 = 0
 
     # Define the width of each square on the chess board
     square_width = 6
 
-    r =  (x0-x)/square_width
-    c =  (y0-y)/square_width
-    
+    r =  (y-y0)/square_width
+    c =  (x-x0)/square_width
+    if(r>=8):
+        print('WARN r = ',r)
+        r = 7
+    if(c>=8):
+        print('WARN c = ',c)
+        c = 7
+
 
     return int(r),int(c)
 

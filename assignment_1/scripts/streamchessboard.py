@@ -165,8 +165,10 @@ def image_getter():
         cv2.imshow("Camera_Stream",stream.camera_stream)
         if stream.chess_board is not None:
             image = stream.chess_board
-            labelled_image,chess_state= detector.detect_image(image)
-            print("Chess State: {}".format(chess_state))
+            labelled_image,chess_state = detector.detect_image(image)
+            #print("Chess State: {}".format(chess_state))
+            print("Chess State")
+            print(chess_state)
             cv2.imshow("Chess_Board",image)
             cv2.imshow("labelled_image",labelled_image)
         else:

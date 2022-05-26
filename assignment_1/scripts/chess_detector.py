@@ -33,7 +33,7 @@ class ChessDetector():
         with open(self.classesFile, 'rt') as f:
             self.classes = f.read().rstrip('\n').split('\n')
 
-        model_filename = os.path.join(dirname, 'detection_files/chess.onnx')
+        model_filename = os.path.join(dirname, 'detection_files/chess_weight.onnx')
         self.modelWeights = model_filename
         self.net = cv2.dnn.readNet(self.modelWeights)
         
@@ -71,6 +71,9 @@ class ChessDetector():
         cv2.rectangle(im, (x,y), (x + dim[0], y + dim[1] + baseline), (0,0,0), cv2.FILLED)
         # Display text inside the rectangle.
         cv2.putText(im, label, (x, y + dim[1]), self.font_face, self.font_scale, self.yellow, self.thickness, cv2.LINE_AA)
+        r,c = xy2square(x,y)
+        cv2.putText(im, 'r ' + str(r)+' c '+str(c), (x, y + dim[1]+20), self.font_face, self.font_scale, self.black, self.thickness, cv2.LINE_AA) #display pixel positions
+
 
     def pre_process(self,input_image, net):
         # Create a 4D blob from a frame.

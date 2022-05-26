@@ -7,6 +7,8 @@ from chess_arm import chess_arm
 from streamchessboard import StreamChessBoard
 from chess_detector import ChessDetector
 import numpy as np
+import cv2
+import rospy
 #from PIL import ImageTk, Image  
 #global constants used by the GUI
 counter = 0
@@ -116,14 +118,14 @@ def is_white(x,y):
     odd_row = y%2 
     if odd_row:
        if odd_col:
-          is_white = True
+          is_white = False
        else:
-           is_white = False
+           is_white = True
     else:
         if odd_col:
-          is_white = False
+          is_white = True
         else:
-           is_white = True
+           is_white = False
 
     return is_white
 
@@ -375,17 +377,32 @@ def generate_random_board_state():
 
     return chess_state
 
-    
+
+def update_board(stream,detector):
+    #raw_board_state = generate_random_board_state()
+    image = stream.chess_board
+    cv2.imshow("Camera_Stream",stream.camera_stream)
+    if stream.chess_board is not None:
+        labelled_image,chess_state = detector.detect_image(image)
+        board_state = streamchess_state_to_board(chess_state)
+        board_squares = render_blank_board()
+        board_squares = reset_board(board_squares,board_state)
+        print("Chess State")
+        print(chess_state)
+    else:
+        print("April Tags not found....")
 
 
 def main():
-    #create a board
-    arm = chess_arm()
+    
+    arm = chess_arm()#initialise the arm
+    #render the board in the GUI
     board_squares = render_blank_board()
     #board_state = starting_board
     #board_squares = reset_board(board_squares,board_state)
-    #stream = StreamChessBoard()#create the object to stream in the chess images
-    #detector = ChessDetector()#create the object to detect board state from the chess images
+    rospy.Rate(1)
+    stream = StreamChessBoard()#create the object to stream in the chess images
+    detector = ChessDetector()#create the object to detect board state from the chess images
     #create the state of the board
     white_castle_rights = (True,True)#Is it still possible to castle on Queen and King Side Respectively
     black_castle_rights = (True,True)
@@ -403,15 +420,8 @@ def main():
     enter_end.pack()
     move_button = tk.Button(master=move_controls,text="MOVE",fg='white',bg='red',command=lambda: move_arm_between_squares(arm))
     move_button.pack()
-    #clock = tk.Label(bg='silver',fg='black')
-    #clock.pack(side = tk.RIGHT)
-    def update_board():
-        raw_board_state = generate_random_board_state()
-        board_state = streamchess_state_to_board(raw_board_state)
-        board_squares = render_blank_board()
-        board_squares = reset_board(board_squares,board_state)
-        window.after(5000,update_board)
-    update_board()
+    refresh_button = tk.Button(master=move_controls,text="REFRESH BOARD",fg='white',bg='green',command=lambda: update_board(stream,detector))
+    refresh_button.pack()
     window.mainloop()
 
 
