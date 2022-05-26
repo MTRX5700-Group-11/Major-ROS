@@ -23,11 +23,6 @@ find_package(catkin REQUIRED
 ## System dependencies are found with CMake's conventions
 find_package(Eigen3 REQUIRED)
 
-generate_messages(
-  DEPENDENCIES
-  std_msgs
-)
-
 ## catkin specific configuration
 catkin_package(
 #  INCLUDE_DIRS include
@@ -36,7 +31,13 @@ catkin_package(
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
+
 add_message_files(
   FILES
   arm_command.msg
 )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+
