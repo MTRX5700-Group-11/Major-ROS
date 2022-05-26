@@ -3,12 +3,14 @@ import tkinter as tk
 import sunfish
 import time
 import random
-from chess_arm import chess_arm
+#from chess_arm import chess_arm
 from streamchessboard import StreamChessBoard
 from chess_detector import ChessDetector
 import numpy as np
 import cv2
 import rospy
+from std_msgs.msg import String
+from assignment_1.msg import arm_command
 #from PIL import ImageTk, Image  
 #global constants used by the GUI
 counter = 0
@@ -354,11 +356,17 @@ def streamchess_state_to_board(chess_state):
 start_position=tk.StringVar()
 end_position=tk.StringVar()
 
-def move_arm_between_squares(arm):
+def move_arm_between_squares(pub):
+    command = arm_command()
+    command.command = "Move"
     global start_position
     global end_position
-    arm.move_piece(start_position.get(),end_position.get())
-    return 
+    command.start = start_position.get()#extract positions from the tkinter widgets
+    command.end = end_position.get()#extract positions from tkinter widgets
+    print(command.start)
+    print(command.end)
+    pub.publish(command)
+    #arm.move_piece(start_position.get(),end_position.get())
  
 
 
@@ -394,8 +402,9 @@ def update_board(stream,detector):
 
 
 def main():
-    
-    arm = chess_arm()#initialise the arm
+    rospy.init_node('GUI')
+    pub = rospy.Publisher('arm_command', arm_command, queue_size=10)
+    #finalise the arm
     #render the board in the GUI
     board_squares = render_blank_board()
     #board_state = starting_board
@@ -418,7 +427,7 @@ def main():
     end_position_display.pack()
     enter_end = tk.Entry(master=move_controls, fg='black',bg='silver',width=20,textvariable=end_position)
     enter_end.pack()
-    move_button = tk.Button(master=move_controls,text="MOVE",fg='white',bg='red',command=lambda: move_arm_between_squares(arm))
+    move_button = tk.Button(master=move_controls,text="MOVE",fg='white',bg='red',command=lambda: move_arm_between_squares(pub))
     move_button.pack()
     refresh_button = tk.Button(master=move_controls,text="REFRESH BOARD",fg='white',bg='green',command=lambda: update_board(stream,detector))
     refresh_button.pack()
