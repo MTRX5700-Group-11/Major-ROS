@@ -28,7 +28,7 @@ center_x = int(window_width/2)
 center_y = int(window_height/2)
 # set the position of the window to the center of the screen
 window.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
-
+board_state = 'invalid'#the board is initially invalid till we read it
 #add the program icon
 logo = tk.PhotoImage(file='GUI/garry_kasparov.png')
 window.tk.call('wm', 'iconphoto', window._w, logo)
@@ -59,6 +59,8 @@ starting_board = ('black_rook','black_knight','black_bishop','black_queen','blac
                   'empty','empty','empty','empty','empty','empty','empty','empty',
                   'white_pawn','white_pawn','white_pawn','white_pawn','white_pawn','white_pawn','white_pawn','white_pawn',
                   'white_rook','white_knight','white_bishop','white_queen','white_king','white_bishop','white_knight','white_rook')
+
+
 
 sunfish_state2 = (
     '         \n'  #   0 -  9
@@ -357,18 +359,19 @@ start_position=tk.StringVar()
 end_position=tk.StringVar()
 
 def move_arm_between_squares(pub):
-    command = arm_command()
-    command.command = "Move"
     global start_position
     global end_position
-    command.start = start_position.get()#extract positions from the tkinter widgets
-    command.end = end_position.get()#extract positions from tkinter widgets
-    print(command.start)
-    print(command.end)
-    pub.publish(command)
-    #arm.move_piece(start_position.get(),end_position.get())
- 
+    start_position = start_position.get()#extract positions from the tkinter widgets
+    end_position = end_position.get()#extract positions from tkinter widgets
+    attack(start_position,end_position,pub)
 
+#attack a square and then move a piece in to replace it 
+def attack(start_position,end_position,pub):
+    command = arm_command()
+    command.command = "Attack"
+    command.start = start_position
+    command.end = end_position
+    pub.publish(command)
 
 
 
@@ -385,6 +388,41 @@ def generate_random_board_state():
 
     return chess_state
 
+#the get move function is a slightly modified version of the main function from sunfish
+#Sunfish originally written by Thomas Ahle, Available online at https://github.com/thomasahle/sunfish
+def  computer_move(pub,computer_move_msg):
+    global board_state
+    sunfish_board = convert_board_to_sunfish(board_state)
+    hist = [sunfish.Position(sunfish_board, 0, (False,False), (False,False), 0, 0)]#Castling is banned in this game
+    searcher = sunfish.Searcher()
+    start = time.time()
+    for _depth, move, score in searcher.search(hist[-1], hist):
+        if time.time() - start > 1:
+            break
+
+    if score == sunfish.MATE_UPPER:
+        print("Checkmate!")
+
+    # The black player moves from a rotated position, so we have to
+    # 'back rotate' the move before printing it.
+    computer_move = "COMPUTER MOVE:" + sunfish.render(119-move[0]) + sunfish.render(119-move[1])
+    computer_move_msg.set(computer_move)
+
+    print(computer_move)
+    start_position = sunfish.render(119-move[0])
+    end_position = sunfish.render(119-move[1])
+    attack(start_position,end_position,pub)
+
+    
+
+#for testing without the camera
+def update_board_test():
+    #raw_board_state = generate_random_board_state()
+    global board_state
+    #board_state = streamchess_state_to_board(raw_board_state)
+    board_state = starting_board
+    board_squares = render_blank_board()
+    board_squares = reset_board(board_squares,board_state)
 
 def update_board(stream,detector):
     #raw_board_state = generate_random_board_state()
@@ -392,6 +430,7 @@ def update_board(stream,detector):
         image = stream.chess_board
         cv2.imshow("Camera_Stream",stream.camera_stream)
         labelled_image,chess_state = detector.detect_image(image)
+        global board_state
         board_state = streamchess_state_to_board(chess_state)
         board_squares = render_blank_board()
         board_squares = reset_board(board_squares,board_state)
@@ -411,6 +450,7 @@ def update_board(stream,detector):
 def main():
     rospy.init_node('GUI')
     pub = rospy.Publisher('arm_command', arm_command, queue_size=10)
+    computer_move_msg = tk.StringVar()
     #finalise the arm
     #render the board in the GUI
     board_squares = render_blank_board()
@@ -420,8 +460,6 @@ def main():
     stream = StreamChessBoard()#create the object to stream in the chess images
     detector = ChessDetector()#create the object to detect board state from the chess images
     #create the state of the board
-    white_castle_rights = (True,True)#Castling will be disabled for this game
-    black_castle_rights = (True,True)
     move_controls = tk.Frame(bg='silver')
     move_controls.pack(side = tk.LEFT)
     move_label = tk.Label(master=move_controls, fg='blue',bg='gold',text="Piece Move Controls")
@@ -436,7 +474,13 @@ def main():
     enter_end.pack()
     move_button = tk.Button(master=move_controls,text="MOVE",fg='white',bg='red',command=lambda: move_arm_between_squares(pub))
     move_button.pack()
-    refresh_button = tk.Button(master=move_controls,text="REFRESH BOARD",fg='white',bg='green',command=lambda: update_board(stream,detector))
+    computer_move_button = tk.Button(master=move_controls,text="COMPUTER MOVE",fg='white',bg='blue',command=lambda: computer_move(pub,computer_move_msg))
+    computer_move_button.pack()
+    global computer_move_display
+    computer_move_display = tk.Label(master=move_controls,textvariable=computer_move_msg,fg='white',bg='blue')
+    computer_move_display.pack()
+    #refresh_button = tk.Button(master=move_controls,text="REFRESH BOARD",fg='white',bg='green',command=lambda: update_board(stream,detector))#for real camera
+    refresh_button = tk.Button(master=move_controls,text="REFRESH BOARD",fg='white',bg='green',command=lambda: update_board_test())#for no real camera
     refresh_button.pack()
     window.mainloop()
 
