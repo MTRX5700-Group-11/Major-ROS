@@ -1,7 +1,12 @@
 #program to control a chess-playing robot
 import tkinter as tk
 import sunfish
+import time
+import random
 from chess_arm import chess_arm
+from streamchessboard import StreamChessBoard
+from chess_detector import ChessDetector
+import numpy as np
 #from PIL import ImageTk, Image  
 #global constants used by the GUI
 counter = 0
@@ -177,6 +182,8 @@ def update_board_square(board_squares,x,y,piece):
         new_image = empty[white]
     else:
         print('error, invalid piece ', piece)
+        new_image = empty[white]
+
     new_square = tk.Label(window,image=new_image,border=0)
     new_square.place(x=board_col_to_x(x),y=board_row_to_y(y))
     board_squares[index] = new_square
@@ -266,6 +273,8 @@ def convert_sunfish_to_name(piece):
         new_name = 'pad'
     return new_name
 
+
+
 #convert the board state in our format to sunfish format
 def convert_board_to_sunfish(board):
     padding = '         \n'
@@ -295,6 +304,51 @@ def convert_sunfish_to_board(sunfish_board):
             board.append(piece_name)
     return board
 
+
+#convert the numeric format from streamchess into the format used by the GUI
+def streamchess_num_to_name(piece_number):
+    piece_name = 'empty'
+    if piece_number==1:
+        piece_name = 'white_king'
+    elif piece_number==2:
+        piece_name = 'white_queen'
+    elif piece_number==3:
+        piece_name = 'white_bishop'
+    elif piece_number==4:
+        piece_name = 'white_knight'
+    elif piece_number==5:
+        piece_name = 'white_rook'
+    elif piece_number==6:
+        piece_name = 'white_pawn'
+    elif piece_number==7:
+        piece_name = 'black_king'
+    elif piece_number==8:
+        piece_name = 'black_queen'
+    elif piece_number==9:
+        piece_name = 'black_bishop'
+    elif piece_number==10:
+        piece_name = 'black_knight'
+    elif piece_number==11:
+        piece_name = 'black_bishop'
+    elif piece_number==12:
+        piece_name = 'black_pawn'
+    return piece_name
+
+
+#convert the state of the board in streamchess format to our own format
+def streamchess_state_to_board(chess_state):
+    #go through all points in the board
+    board = []#generate the blank board
+    for r in range(8):
+        for c in range(8):
+            piece_number = chess_state[r][c]#find the piece number from the streamchess board state
+            piece_name = streamchess_num_to_name(piece_number)#convert the number to the correct name for the GUI format
+            board.append(piece_name)
+    return board
+
+
+
+
 start_position=tk.StringVar()
 end_position=tk.StringVar()
 
@@ -303,14 +357,36 @@ def move_arm_between_squares(arm):
     global end_position
     arm.move_piece(start_position.get(),end_position.get())
     return 
+ 
+
+
+
+
+def generate_random_board_state():
+    #generate a board state comparable too that made by the chess_detector class, but random
+    chess_state = np.zeros((8,8))
+    for r in range(8):
+        for c in range(8):
+            blank = random.randint(1,2)
+            if(blank==1):#setup half the squares to have a piece
+                chess_state[r][c] = random.randint(1,12)
+            else:
+                chess_state[r][c] = 0#and other half to be blank
+
+    return chess_state
+
+    
 
 
 def main():
     #create a board
     arm = chess_arm()
     board_squares = render_blank_board()
-    board_state = starting_board
-    board_squares = reset_board(board_squares,board_state)
+    #board_state = starting_board
+    #board_squares = reset_board(board_squares,board_state)
+    #stream = StreamChessBoard()#create the object to stream in the chess images
+    #detector = ChessDetector()#create the object to detect board state from the chess images
+    #create the state of the board
     white_castle_rights = (True,True)#Is it still possible to castle on Queen and King Side Respectively
     black_castle_rights = (True,True)
     move_controls = tk.Frame(bg='silver')
@@ -327,14 +403,15 @@ def main():
     enter_end.pack()
     move_button = tk.Button(master=move_controls,text="MOVE",fg='white',bg='red',command=lambda: move_arm_between_squares(arm))
     move_button.pack()
-    #x_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set X")
-    #x_set.pack()
-    #enter_x = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
-    #enter_x.pack()
-    #y_set = tk.Label(master=move_controls, fg='blue',bg='gold',text="Set Y")
-    #y_set.pack()
-    #enter_y = tk.Entry(master=move_controls, fg='black',bg='silver',width=20)
-    #enter_y.pack()
+    #clock = tk.Label(bg='silver',fg='black')
+    #clock.pack(side = tk.RIGHT)
+    def update_board():
+        raw_board_state = generate_random_board_state()
+        board_state = streamchess_state_to_board(raw_board_state)
+        board_squares = render_blank_board()
+        board_squares = reset_board(board_squares,board_state)
+        window.after(5000,update_board)
+    update_board()
     window.mainloop()
 
 

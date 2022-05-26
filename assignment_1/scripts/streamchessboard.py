@@ -149,9 +149,8 @@ def save_image(count,image):
 
     cv2.imwrite(filename,image)
         
-
     
-
+#demonstration program to run the image streaming program
 def image_getter():
     rospy.init_node('image_streamer', anonymous=True)
 
