@@ -388,17 +388,24 @@ def generate_random_board_state():
 
 def update_board(stream,detector):
     #raw_board_state = generate_random_board_state()
-    image = stream.chess_board
-    cv2.imshow("Camera_Stream",stream.camera_stream)
     if stream.chess_board is not None:
+        image = stream.chess_board
+        cv2.imshow("Camera_Stream",stream.camera_stream)
         labelled_image,chess_state = detector.detect_image(image)
         board_state = streamchess_state_to_board(chess_state)
         board_squares = render_blank_board()
         board_squares = reset_board(board_squares,board_state)
         print("Chess State")
-        print(chess_state)
+        cv2.imshow("Chess_Board",image)
+        cv2.imshow("labelled_image",labelled_image)
+        #print(chess_state) prints board state to command line, unneeded once we have a GUI  
     else:
         print("April Tags not found....")
+        image = np.ones((640,640,1), np.uint8)*100
+        cv2.imshow('Nothing to see here',image)
+
+    cv2.waitKey()
+    cv2.destroyAllWindows()
 
 
 def main():
@@ -413,7 +420,7 @@ def main():
     stream = StreamChessBoard()#create the object to stream in the chess images
     detector = ChessDetector()#create the object to detect board state from the chess images
     #create the state of the board
-    white_castle_rights = (True,True)#Is it still possible to castle on Queen and King Side Respectively
+    white_castle_rights = (True,True)#Castling will be disabled for this game
     black_castle_rights = (True,True)
     move_controls = tk.Frame(bg='silver')
     move_controls.pack(side = tk.LEFT)

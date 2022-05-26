@@ -162,18 +162,18 @@ def image_getter():
     input("Press Enter once all four april tags are visible")
     
     while not rospy.is_shutdown():
-        cv2.imshow("Camera_Stream",stream.camera_stream)
         if stream.chess_board is not None:
+            cv2.imshow("Camera_Stream",stream.camera_stream)
             image = stream.chess_board
             labelled_image,chess_state = detector.detect_image(image)
             #print("Chess State: {}".format(chess_state))
             print("Chess State")
-            print(chess_state)
             cv2.imshow("Chess_Board",image)
             cv2.imshow("labelled_image",labelled_image)
+            cv2.waitKey(20)
         else:
             print("April Tags not found....")
-        cv2.waitKey(20)
+       
     rospy.spin()
 
 if __name__ == '__main__':
