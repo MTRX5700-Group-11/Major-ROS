@@ -51,14 +51,14 @@ white_pawn = (tk.PhotoImage(file='GUI/display_pieces/white_pawn_on_black.png'),t
 #and the empty square
 empty = (tk.PhotoImage(file='GUI/display_pieces/empty_black.png'),tk.PhotoImage(file='GUI/display_pieces/empty_white.png'))
 
-starting_board = ('black_rook','black_knight','black_bishop','black_queen','black_king','black_bishop','black_knight','black_rook',
+starting_board = list(('black_rook','black_knight','black_bishop','black_queen','black_king','black_bishop','black_knight','black_rook',
                   'black_pawn','black_pawn','black_pawn','black_pawn','black_pawn','black_pawn','black_pawn','black_pawn',
                   'empty','empty','empty','empty','empty','empty','empty','empty',
                   'empty','empty','empty','empty','empty','empty','empty','empty',
                   'empty','empty','empty','empty','empty','empty','empty','empty',
                   'empty','empty','empty','empty','empty','empty','empty','empty',
                   'white_pawn','white_pawn','white_pawn','white_pawn','white_pawn','white_pawn','white_pawn','white_pawn',
-                  'white_rook','white_knight','white_bishop','white_queen','white_king','white_bishop','white_knight','white_rook')
+                  'white_rook','white_knight','white_bishop','white_queen','white_king','white_bishop','white_knight','white_rook'))
 
 
 
@@ -203,6 +203,17 @@ def reset_board(board,goal_board):
             new_piece = goal_board[index]
             board = update_board_square(board,x,y,new_piece)
     return board
+
+
+### Function to convert chess square position (A1 to H8) to x,y
+def square2xy(square):
+
+    square_id = list(square.upper())
+    x_position = ord(square_id[0])-ord('A')
+
+    y_position = 8-int(square_id[1])
+
+    return x_position,y_position
 
 #what should happen when the user clicks the "Create Piece Button"
 #def user_create_piece_click():
@@ -357,20 +368,56 @@ def streamchess_state_to_board(chess_state):
 
 start_position=tk.StringVar()
 end_position=tk.StringVar()
+move_msg = tk.StringVar()
+capture_msg = tk.StringVar()
 
 def move_arm_between_squares(pub):
     global start_position
     global end_position
-    start_position = start_position.get()#extract positions from the tkinter widgets
-    end_position = end_position.get()#extract positions from tkinter widgets
-    attack(start_position,end_position,pub)
+    l_start_position = start_position.get()#extract positions from the tkinter widgets
+    l_end_position = end_position.get()#extract positions from tkinter widgets
+    move_piece(l_start_position,l_end_position,pub)
 
 #attack a square and then move a piece in to replace it 
-def attack(start_position,end_position,pub):
+def move_piece(start_position,end_position,pub):
     command = arm_command()
-    command.command = "Attack"
+    global board_state
+    start_x,start_y = square2xy(start_position)#get x and y position of moves
+    end_x,end_y = square2xy(end_position)#get x and y positions of moves
+    start_index = list_index(start_x,start_y)
+    start_piece = board_state[start_index]#extract the piece we are starting from from the array
+    end_index = list_index(end_x,end_y)
+    end_piece = board_state[end_index]#extract the piece at the end position from from the array
+    move_text = "MOVE: " + start_position + " " + start_piece + " TO " + end_position
+    print(move_text)
+    if end_piece!='empty':#if the place we are moving too is not empty, run attack option to remove the piece from the board
+        command.command = "Attack"
+        capture_text = "CAPTURE: " + end_position + " " + end_piece 
+    else:
+        command.command = "Move"
+        capture_text = "NO CAPTURE"
+    #handle promoition
+    #print('starty',start_y,'endy',end_y)
+    if start_piece=='white_pawn' and end_y ==0:
+        start_piece = 'white_queen'
+        capture_text = capture_text + ' PROMOTION TO QUEEN'
+    elif start_piece=='black_pawn' and end_y ==7:
+        start_piece = 'black_queen'
+        capture_text = capture_text + ' PROMOTION TO QUEEN'
+
+    print(capture_text)
+
     command.start = start_position
     command.end = end_position
+    #update board state
+    global move_msg
+    global capture_msg
+    move_msg.set(move_text)
+    capture_msg.set(capture_text)
+    board_state[start_index] = 'empty'
+    board_state[end_index] = start_piece
+    board_squares = render_blank_board()
+    board_squares = reset_board(board_squares,board_state)
     pub.publish(command)
 
 
@@ -411,7 +458,7 @@ def  computer_move(pub,computer_move_msg):
     print(computer_move)
     start_position = sunfish.render(119-move[0])
     end_position = sunfish.render(119-move[1])
-    attack(start_position,end_position,pub)
+    move_piece(start_position,end_position,pub)
 
     
 
@@ -479,8 +526,15 @@ def main():
     global computer_move_display
     computer_move_display = tk.Label(master=move_controls,textvariable=computer_move_msg,fg='white',bg='blue')
     computer_move_display.pack()
-    #refresh_button = tk.Button(master=move_controls,text="REFRESH BOARD",fg='white',bg='green',command=lambda: update_board(stream,detector))#for real camera
-    refresh_button = tk.Button(master=move_controls,text="REFRESH BOARD",fg='white',bg='green',command=lambda: update_board_test())#for no real camera
+    global move_msg
+    global capture_msg
+    all_move_display = tk.Label(master=move_controls,textvariable=move_msg,fg='white',bg='blue')
+    all_move_display.pack()
+    capture_move_display = tk.Label(master=move_controls,textvariable=capture_msg,fg='white',bg='blue')
+    capture_move_display.pack()
+
+    refresh_button = tk.Button(master=move_controls,text="REFRESH BOARD",fg='white',bg='green',command=lambda: update_board(stream,detector))#for real camera
+    #refresh_button = tk.Button(master=move_controls,text="REFRESH BOARD",fg='white',bg='green',command=lambda: update_board_test())#for no real camera
     refresh_button.pack()
     window.mainloop()
 
