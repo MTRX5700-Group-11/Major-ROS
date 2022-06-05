@@ -10,68 +10,14 @@ Original file is located at
 from google.colab import drive
 drive.mount('/content/drive')
 
-u = 'bzha5848'
-r = 'majorChess'
-g = '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'
-!git clone https://{g}@github.com/{u}/{r}
+# Download repo of dataset here.
 
 # Commented out IPython magic to ensure Python compatibility.
 #clone YOLOv5 and 
 !git clone https://github.com/ultralytics/yolov5  # clone repo
-# %cd yolov5
-# %pip install -qr requirements.txt # install dependencies
-# %pip install -q roboflow
 
 from IPython.display import Image, clear_output
-
-# Commented out IPython magic to ensure Python compatibility.
-# %%writefile data/hyp.chess.yaml
-# 
-# lr0: 0.01  # initial learning rate (SGD=1E-2, Adam=1E-3)
-# lrf: 0.2  # final OneCycleLR learning rate (lr0 * lrf)
-# momentum: 0.937  # SGD momentum/Adam beta1
-# weight_decay: 0.0005  # optimizer weight decay 5e-4
-# warmup_epochs: 3.0  # warmup epochs (fractions ok)
-# warmup_momentum: 0.8  # warmup initial momentum
-# warmup_bias_lr: 0.1  # warmup initial bias lr
-# box: 0.05  # box loss gain
-# cls: 0.5  # cls loss gain
-# cls_pw: 1.0  # cls BCELoss positive_weight
-# obj: 1.0  # obj loss gain (scale with pixels)
-# obj_pw: 1.0  # obj BCELoss positive_weight
-# iou_t: 0.20  # IoU training threshold
-# anchor_t: 4.0  # anchor-multiple threshold
-# # anchors: 3  # anchors per output layer (0 to ignore)
-# fl_gamma: 0.0  # focal loss gamma (efficientDet default gamma=1.5)
-# ##
-# # Data Augmentation Hyperparameters
-# ##
-# hsv_h: 0.9  # image HSV-Hue augmentation (fraction)
-# hsv_s: 0.9  # image HSV-Saturation augmentation (fraction)
-# hsv_v: 0.9  # image HSV-Value augmentation (fraction)
-# degrees: 180.0  # image rotation (+/- deg)
-# translate: 0.7  # image translation (+/- fraction)
-# scale: 3.0  # image scale (+/- gain)
-# shear: 45.0  # image shear (+/- deg)
-# perspective: 0.001  # image perspective (+/- fraction), range 0-0.001
-# flipud: 0.5  # image flip up-down (probability)
-# fliplr: 0.5  # image flip left-right (probability)
-# mosaic: 0.0  # image mosaic (probability)
-# mixup: 1.0  # image mixup (probability)
-# copy_paste: 0.0  # do not use image segmentation aug style
 
 !python train.py --img 416 --batch 16 --epochs 1001 --data /content/majorChess/coco.yaml --weights yolov5m.pt --cache --save-period 500 --project /content/drive/MyDrive/robotics --name DetectionH --hyp /content/yolov5/data/hyps/hyp.scratch-high.yaml
 
 !python val.py --weights /content/drive/MyDrive/robotics/DetectionH5/weights/best.pt --data /content/majorChess/coco.yaml --img 416 --iou 0.65 --half --task test
-
-!python train.py --img 416 --batch 16 --epochs 1001 --data /content/majorChess/coco.yaml --weights yolov5m.pt --cache --save-period 500 --project /content/drive/MyDrive/robotics --name DetectionH --hyp /content/yolov5/data/hyps/hyp.scratch-high.yaml
-
-!python train.py --img 416 --batch 16 --epochs 1001 --data /content/majorChess/coco.yaml --weights yolov5m.pt --cache --save-period 500 --project /content/drive/MyDrive/robotics --name DetectionH --hyp /content/yolov5/data/hyps/hyp.scratch-high.yaml
-
-!python val.py --weights /content/drive/MyDrive/robotics/DetectionH3/weights/best.pt --data /content/majorChess/coco.yaml --img 416 --iou 0.65 --half --task test
-
-!python train.py --img 416 --batch 16 --epochs 2001 --data /content/majorChess/coco.yaml --weights yolov5m.pt --cache --save-period 500 --project /content/drive/MyDrive/robotics --name DetectionH --hyp /content/yolov5/data/hyps/hyp.scratch-high.yaml
-
-!python val.py --weights /content/drive/MyDrive/robotics/DetectionH4/weights/best.pt --data /content/majorChess/coco.yaml --img 416 --iou 0.65 --half --task test
-
-!python train.py --img 416 --batch 16 --epochs 10 --data /content/envolve/data.yaml --weights yolov5m.pt --cache --evolve --project /content/drive/MyDrive/robotics --name hype --hyp /content/yolov5/data/hyps/hyp.scratch-high.yaml
