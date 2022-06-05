@@ -6,15 +6,10 @@
 This git repo contains all the code necessary for Group 11's MTRX5700 Major Project, The Automated Kasparov Chess Playing Robot.
 Unfortunately we were unable to control the robot arm from Ubuntu 20.04 and ROS Noetic, however our vision processing workflow did not work on Ubuntu 18.04 and ROS Melodic. Hence to successfully utilise this project, one needs two computers connected to the same local area network which the UR5e Arm is connected to. The first computer(henceforth called the Arm computer) will need to run ROS Melodic and Ubuntu 18.04. The Arm computer will be responsible for actually communicating with UR5e arm. The second computer(henceforth called the User computer) will need to run ROS Noetic and Ubuntu 20.04. The user interface be responsible for processing image data, running the user interface and communicating general control commands to the Arm Computer. One of the computers also needs to be connected to an IntelRealSense, which we used to get the images for chess detection. This can be connected to ROS using the realsense-ros package available at https://github.com/IntelRealSense/realsense-ros. It may well be possible to use other camera setups, but this is not officially supported.
 
-## Instructions - User Computer
-
-The user computer code is included in the detect-decide branch of this Git Repo. This should be 
-
-
 
 
 ### Instructions to control the arm - Arm Computer
-The following instructions are for setting up the arm interface on an ubuntu 18.04 computer, so that the user computer can publish topics to this computer, which will be published to the ur5e arm.
+The following instructions are for setting up the arm interface on an ubuntu 18.04 computer, so that the user computer can publish topics to this computer, which will be published to the ur5e arm. The code for this is included in the "control-branch" which should be installed in it's own catkin-ws as normal for projects in MTRX5700.
 
 ### Initializing the Hardware
 
@@ -59,3 +54,14 @@ rosrun assignment_1 chess_arm.py
 Now you are all set! Wait for the user computer to publish topics to the arm and see its action in playing chess.
 
 Note: It is very important to double-check that all the devices are connected to the same network
+
+## Instructions - User Computer
+
+The user computer code is included in the "detect-decide" branch of this Git Repo. This should be installed in it's own catkin-ws as normal for projects in MTRX5700. 
+
+1.Make sure the computer is connected to the same network as the Arm Computer and make sure that master/slave IP addresses are setup in a compatible fashion with how the Arm Computer is setup.
+2.Connect the Intel real-sense camera to the computer
+3.Launch the ros-realsense node from the command line using the terminal command "roslaunch realsense2_camera rs_camera.launch". If errors occur, please refer to the guide herehttps://github.com/IntelRealSense/realsense-ros
+4.Navigate into the catkin-ws's scripts folder (inside the assignment_1 folder) where a file named chess_gui.py should be located. Run this file under python3 using the command "python3 chess_gui.py". This will launch the GUI interface, which if you have setup the other computer correctly, should be able to publish move commands to the real arm.
+
+
